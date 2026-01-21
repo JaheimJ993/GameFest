@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | GameFest Guyana</title>
+  <script src="/js/dynamic-head.js" defer></script>
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
+  <script src="/js/main.js" defer></script>
+</head>
+
+<body class="bg-black text-white font-sans overflow-x-hidden w-screen">
+  <!-- Page Header -->
+  <header class="h-[90px] w-full content-center bg-black text-white fixed z-50">
+    <!-- Content Wrapper -->
+    <div class="mx-auto flex h-fit w-full max-w-[1500px] justify-between max-md:justify-between">
+      <!-- GameFest logo -->
+      <div class="w-fit content-center max-md:ml-4">
+        <a href="/"><img class="mx-4 w-[140px]" src="/images/GameFest_Logos/Logo-large.png" /></a>
+      </div>
+
+      <!-- Tabs -->
+      <div class="hidden w-fit flex-row content-center items-center justify-between px-4 md:block">
+        <a href=""
+          class="rounded-[6px] border-3 border-yellow-300 bg-yellow-300 px-4 py-2 font-semibold tracking-[2px] text-black">GAMEFEST
+          2026</a>
+        <!-- Past Events -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#Archives">ARCHIVES</a>
+        <!-- GameStore -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#merch">GAMESTORE</a>
+        <!-- Sponsor -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/sponsor">SPONSOR</a>
+        <!-- About -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/about">ABOUT US</a>
+        <!-- Contact Us -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#contact">CONTACT</a>
+      </div>
+
+      <!-- Hamburger Icon -->
+      <div id="hamburgerBtn" class="mr-4 w-fit md:hidden h-fit my-auto">
+        <!-- Hamburger Icon -->
+        <svg id="openMobileMenu" class="" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24"
+          aria-hidden="true" role="img">
+          <path d="M4 6.5H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 12H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 17.5H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        </svg>
+
+        <!-- closeMenu Icon -->
+        <svg id="closeMenu" class="hidden" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24"
+          aria-hidden="true" role="img">
+          <path d="M6 6L18 18" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M18 6L6 18" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile dropdown menu -->
+  <section id="mobile-menu"
+    class="text-5x fixed top-[78px] z-40 h-full w-full origin-top animate-[var(--animate-open-menu)] flex-col content-center justify-center overflow-x-hidden overflow-y-hidden bg-black text-white backdrop-opacity-20 hidden">
+    <!-- <button class="text-8xl self-end px-6 ">
+            &times;
+        </button> -->
+    <nav class="my-auto mt-[200px] flex min-h-screen flex-col items-center gap-y-2 py-8" aria-label="mobile">
+      <a href="/"
+        class="w-content tracking py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">HOME</a>
+      <span id="Archives-mobile"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:cursor-pointer hover:brightness-75">ARCHIVES</span>
+      <div id="dropdown-mobile"
+        class="border-gray mt mt-[0] hidden h-fit w-[60%] max-w-[300px] origin-top animate-[var(--animate-open-menu)] rounded-2xl border-2 border-white/15 bg-black p-4 text-center text-white">
+        <a class="text-xl font-bold tracking-[6px] duration-200 hover:brightness-75" href="/2024">2024</a>
+        <hr class="text-gray mx-auto my-3 w-[60%] rounded-2xl border-2 border-white/15" />
+        <a class="text-xl font-bold tracking-[6px] duration-200 hover:brightness-75" href="/2025">2025</a>
+      </div>
+      <!--GameStore -->
+      <a href="/#merch"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">GAMESTORE</a>
+      <!-- Sponsor -->
+      <a href="/Sponsor"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">SPONSOR</a>
+      <!--About -->
+      <a href="/about"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">ABOUT</a>
+      <!--Contact Us -->
+      <a href="/#contact"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">CONTACT</a>
+
+      <nav class="mt-[60px] mb-4 flex w-full flex-wrap justify-center gap-x-8 px-4">
+        <a class="h-10 w-10" href="https://www.tiktok.com/@gamefestguyana"><img src="/images/icons/tiktok.png"
+            alt="TikTok" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png"
+            alt="Discord" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+            class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
+            src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://www.instagram.com/gamefestguyana"><img src="/images/icons/instagram-new.png"
+            alt="Instagram" class="h-full w-full object-contain" /></a>
+      </nav>
+    </nav>
+  </section>
+
+  <!-- Hero -->
+  <section class="h-fit w-full bg-gradient2 p-4 text-center text-white">
+    <h1 class="mt-[120px] text-lg font-black tracking-[3px]">THE FULL STORY</h1>
+    <h1 class="p-6 text-6xl font-black tracking-[10px]">ABOUT</h1>
+    <p class="p-3 text-[17px] tracking-[1px] font-medium max-w-[600px] mx-auto">Founded in 2023, GameFest is dedicated
+      to revolutionizing the gaming landscape in Guyana and beyond. As a premier Esports brand, our mission is to foster
+      a thriving community of gamers by hosting high-quality tournaments throughout the year.At the heart of our efforts
+      is our flagship event, the annual GameFest Convention—a gathering of gamers, developers, and enthusiasts to
+      celebrate the gaming culture with exciting competitions, exhibitions, and networking opportunities. However,
+      GameFest goes beyond just one event. We organize a series of tournaments year-round, giving players of all skill
+      levels a platform to compete, showcase their talents, and connect with like-minded individuals.
+      <br><br>
+      Whether you’re a competitive player, a casual fan, or someone interested in the business of gaming, GameFest is
+      your hub for everything Esports. Join us on our journey to elevate gaming in Guyana and take it to the next level!
+    </p>
+  </section>
+
+  <!-- Mission -->
+  <section id="Mission"
+    class="relative h-fit w-full content-center overflow-x-hidden text-white max-md:h-[700px] md:h-[600px]">
+    <!-- Background Image for this section -->
+    <img src="http://localhost:5000/images/2025/Stock-images/_M3A9253-Enhanced-NR.jpg"
+      class="absolute inset-0 -z-10 object-cover brightness-[60%] max-md:h-[700px] md:h-[600px] md:w-full" />
+    <!-- Text -->
+    <div
+      class="h-fit bg-gradient2/80 py-5 text-center max-md:m-auto max-md:max-w-[500px] max-md:rounded-2xl md:h-[600px] md:w-[50%] md:content-center md:bg-gradient2/90">
+      <h1 class="text-6xl font-extrabold tracking-[6px] text-gamefest lg:text-7xl">MISSION</h1>
+      <p class="mx-auto mt-5 mb-3 w-[300px] p-3 text-[15px] tracking-[3px] md:w-[400px]">Our mission at GameFest is to
+        build a dynamic and inclusive Esports community in Guyana by providing players with opportunities to showcase
+        their skills, compete in world-class tournaments, and experience the best of gaming culture. We are committed to
+        organizing innovative events that inspire, entertain, and connect gamers across the region, fostering growth and
+        professional development in the gaming industry.</p>
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <section id="Vision"
+    class="relative h-fit w-full content-center overflow-x-hidden text-white max-md:h-[700px] md:flex md:h-[600px] md:justify-end">
+    <!-- Background Image for this section -->
+    <img src="http://localhost:5000/images/2025/Stock-images/3M3A7386-Enhanced-NR.jpg"
+      class="absolute inset-0 -z-10 object-cover brightness-[60%] max-md:h-[700px] md:h-[600px] md:w-full" />
+    <!-- Text -->
+    <div
+      class="h-fit bg-gradient2/80 py-5 text-center max-md:m-auto max-md:max-w-[500px] max-md:rounded-2xl md:h-[600px] md:w-[50%] md:content-center md:bg-gradient2/90">
+      <h1 class="text-6xl font-extrabold tracking-[6px] text-gamefest lg:text-7xl">VISION</h1>
+      <p class="mx-auto mt-5 mb-3 w-[300px] p-3 text-[15px] tracking-[3px] md:w-[400px]">Our mission at GameFest is to
+        build a dynamic and inclusive Esports community in Guyana by providing players with opportunities to showcase
+        their skills, compete in world-class tournaments, and experience the best of gaming culture. We are committed to
+        organizing innovative events that inspire, entertain, and connect gamers across the region, fostering growth and
+        professional development in the gaming industry.</p>
+    </div>
+  </section>
+
+  <!-- GameFest Team -->
+  <section class="w-full h-fit py-6 bg-gradient2 text-white text-center">
+
+    <!-- Team Intro -->
+    <h1 class="p-6 text-5xl font-black tracking-[10px] lg:text-6xl">MEET THE <span class="text-gamefest">TEAM<span></h1>
+    <!-- Copy -->
+    <p class="p-4 text-[17px] tracking-[1px] font-medium max-w-[600px] mx-auto">
+      At GameFest, our dynamic team is the driving force behind the excitement and innovation of our events. Each member
+      brings unique skills and expertise, working together to create an unforgettable experience for gamers and fans
+      alike. From event operations and logistics to marketing and partnerships, our passionate crew is dedicated to
+      growing esports in Guyana and beyond. We are proud to introduce the talented individuals who make GameFest
+      possible and ensure that every event is a success. Meet the visionaries, strategists, and creators who power
+      GameFest!
+    </p>
+
+    <hr class="w-[80%] mx-auto my-[15px] text-gray border-2 rounded-2xl">
+
+    <!-- Team Members Wrapper -->
+    <div class="w-full max-w-[1500px] h-fit flex flex-wrap justify-around py-5 gap-y-[20px] mx-auto">
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_973049fb1c024f44901ecbf096e497b6~mv2.jpg/v1/crop/x_4145,y_312,w_1903,h_1897/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Untitled%20Project%20(1).jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Trevon Gomes</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Founder & President</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_a447da69fdd24790abac0f5b2916746f~mv2.jpg/v1/crop/x_155,y_111,w_988,h_989/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_4524.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Dave Savory</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Co-Founder</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_1cbef8f6c54a4c138002c6dade4e1ffe~mv2.jpg/v1/crop/x_153,y_176,w_1058,h_1058/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_4564.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Sindy Wang</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Operations & Marketing</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_4b95f72425904fdc8a43b2162928e87e~mv2.jpg/v1/crop/x_0,y_361,w_3104,h_3105/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_0484_Original.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Kesley Borges</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Operations & Marketing</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_9549e0fe5298484c96ceb5fcc731f41b~mv2.jpg/v1/crop/x_999,y_316,w_2103,h_2106/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_4381.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Krystal Melville</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Operations & Marketing</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_4233b90958b742fba30394c9c7a90f8f~mv2.jpg/v1/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_2806.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">Daniel King</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Operations & Marketing</h1>
+      </div>
+
+      <!-- Team Member -->
+      <div class="py-[20px] px-[30px] h-fit w-fit bg-white/5 rounded-[10px] border-[3px] border-white/15">
+
+        <!-- Member Image -->
+        <img class="w-[350px] rounded-[10px]"
+          src="https://static.wixstatic.com/media/67462b_54dc298bd97f4f1c9d079ce7223d9cfd~mv2.jpg/v1/crop/x_181,y_393,w_1001,h_1001/fill/w_688,h_688,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_4526.jpg">
+
+        <!-- Member Name -->
+        <h1 class="text-3xl text-left py-2">SeWeon McGarrel</h1>
+        <!-- Member Title -->
+        <h1 class="text-lg text-left ">Operations and Master of Ceremony</h1>
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- Footer -->
+  <footer id="page-footer" class="w-full overflow-x-hidden bg-gray-900 text-white">
+    <!--Gamefest Logo -->
+    <div id="org-logo" class="mx-auto w-full text-center">
+      <img class="mt-[40px] mx-auto w-[min(20vw,200px)]" src="/images/GameFest_Logos/Logo-large.png"
+        alt="Gamefest Logo" />
+    </div>
+
+    <!-- Contact Information -->
+    <div id="contact"
+      class="mx-auto mt-10 flex w-full max-w-[600px] flex-col items-center justify-around gap-y-6 px-4 text-center sm:flex-row">
+      <div id="email" class="">
+        <a class="inline-flex duration-200 ease-in-out hover:text-gamefest" href="mailto:info@gamefestguyana.com">
+          <img src="/images/icons/email.png" class="h-9 w-9" alt="Email address" />
+          <p>info@gamefestguyana.com</p>
+        </a>
+      </div>
+      <div id="phone" class="">
+        <a class="inline-flex duration-200 ease-in-out hover:text-gamefest" href="tel:592-655-2280">
+          <img src="/images/icons/telephone.png" alt="Phone number" class="h-9 w-9" />
+          <p>+592 655-2280</p>
+        </a>
+      </div>
+    </div>
+
+    <!--Social Pages -->
+    <div id="org-info"
+      class="mx-auto mt-10 flex w-full flex-col items-center gap-y-8 px-4 text-center sm:flex-row sm:justify-center sm:gap-x-14">
+      <a class="h-6 w-6" href="https://www.tiktok.com/@gamefestguyana"><img src="/images/icons/tiktok.png" alt="TikTok"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png" alt="Discord"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
+          src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://www.instagram.com/gamefestguyana"><img src="/images/icons/instagram-new.png"
+          alt="Instagram" class="h-full w-full object-contain" /></a>
+    </div>
+
+    <!--Footer bottom -->
+    <div id="foot" class="mx-auto mt-10 h-[40px] w-full bg-red-500 text-center items-center">
+      <p class="h-[15px] my-auto">© 2026 Game Fest</p>
+    </div>
+  </footer>
+</body>
+
+</html>
+</div>

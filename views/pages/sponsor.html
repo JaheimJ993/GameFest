@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
+  <script src="/js/dynamic-head.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/sponsorCopy.js" defer></script>
+  <script src="/js/sponsorMail.js" defer></script>
+  <title>GAMEFEST | Become A Partner</title>
+</head>
+
+<body class="bg-black text-white">
+  <!-- Navigation Bar -->
+  <header class="h-[90px] w-full content-center bg-black text-white fixed z-50">
+    <!-- Content Wrapper -->
+    <div class="mx-auto flex h-fit w-full max-w-[1500px] justify-between max-md:justify-between">
+      <!-- GameFest logo -->
+      <div class="w-fit content-center max-md:ml-4">
+        <a href="/"><img class="mx-4 w-[140px]" src="/images/GameFest_Logos/Logo-large.png" /></a>
+      </div>
+
+      <!-- Tabs -->
+      <div class="hidden w-fit flex-row content-center items-center justify-between px-4 md:block">
+        <a href=""
+          class="rounded-[6px] border-3 border-yellow-300 bg-yellow-300 px-4 py-2 font-semibold tracking-[2px] text-black">GAMEFEST
+          2026</a>
+        <!-- Past Events -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#Archives">ARCHIVES</a>
+        <!-- GameStore -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#merch">GAMESTORE</a>
+        <!-- Sponsor -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/sponsor">SPONSOR</a>
+        <!-- About -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/about">ABOUT US</a>
+        <!-- Contact Us -->
+        <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
+          href="/#contact">CONTACT</a>
+      </div>
+
+      <!-- Hamburger Icon -->
+      <div id="hamburgerBtn" class="mr-4 w-fit md:hidden h-fit my-auto">
+        <!-- Hamburger Icon -->
+        <svg id="openMobileMenu" class="" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24"
+          aria-hidden="true" role="img">
+          <path d="M4 6.5H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 12H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M4 17.5H20" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        </svg>
+
+        <!-- closeMenu Icon -->
+        <svg id="closeMenu" class="hidden" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 24 24"
+          aria-hidden="true" role="img">
+          <path d="M6 6L18 18" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          <path d="M18 6L6 18" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile dropdown menu -->
+  <section id="mobile-menu"
+    class="text-5x fixed top-[78px] z-40 h-full w-full origin-top animate-[var(--animate-open-menu)] flex-col content-center justify-center overflow-x-hidden overflow-y-hidden bg-black text-white backdrop-opacity-20 hidden">
+    <!-- <button class="text-8xl self-end px-6 ">
+            &times;
+        </button> -->
+    <nav class="my-auto mt-[200px] flex min-h-screen flex-col items-center gap-y-2 py-8" aria-label="mobile">
+      <a href="/"
+        class="w-content tracking py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">HOME</a>
+      <span id="Archives-mobile"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:cursor-pointer hover:brightness-75">ARCHIVES</span>
+      <div id="dropdown-mobile"
+        class="border-gray mt mt-[0] hidden h-fit w-[60%] max-w-[300px] origin-top animate-[var(--animate-open-menu)] rounded-2xl border-2 border-white/15 bg-black p-4 text-center text-white">
+        <a class="text-xl font-bold tracking-[6px] duration-200 hover:brightness-75" href="/2024">2024</a>
+        <hr class="text-gray mx-auto my-3 w-[60%] rounded-2xl border-2 border-white/15" />
+        <a class="text-xl font-bold tracking-[6px] duration-200 hover:brightness-75" href="/2025">2025</a>
+      </div>
+      <!--GameStore -->
+      <a href="/#merch"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">GAMESTORE</a>
+      <!-- Sponsor -->
+      <a href="/Sponsor"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">SPONSOR</a>
+      <!--About -->
+      <a href="/about"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">ABOUT</a>
+      <!--Contact Us -->
+      <a href="/#contact"
+        class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">CONTACT</a>
+
+      <nav class="mt-[60px] mb-4 flex w-full flex-wrap justify-center gap-x-8 px-4">
+        <a class="h-10 w-10" href="https://www.tiktok.com/@gamefestguyana"><img src="/images/icons/tiktok.png"
+            alt="TikTok" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png"
+            alt="Discord" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+            class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
+            src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>
+        <a class="h-10 w-10" href="https://www.instagram.com/gamefestguyana"><img src="/images/icons/instagram-new.png"
+            alt="Instagram" class="h-full w-full object-contain" /></a>
+      </nav>
+    </nav>
+  </section>
+
+  <!-- Sponsor Hero -->
+  <section id="sponsorCopy" class="h-fit w-full content-center text-white max-md:h-[700px] md:h-[600px]">
+    <!-- Background Image for this section -->
+    <img src="images/2025/GameFest-Day/_M3A7082-Enhanced-NR.jpg"
+      class="absolute inset-0 -z-10 object-cover brightness-[60%] max-md:h-[700px] md:h-[600px] md:w-full" />
+    <!-- Text -->
+    <div
+      class="h-fit w-[55%] bg-gradient2/80 text-center max-md:m-auto max-md:w-full max-md:max-w-[500px] max-md:rounded-2xl max-md:py-[200px] md:h-[600px] md:content-center md:bg-gradient2/90">
+      <p class="mb-3 text-2xl tracking-[3px] lg:text-3xl">JOIN THE</p>
+      <h1 class="text-6xl font-extrabold tracking-[6px] text-gamefest lg:text-7xl">MOVEMENT</h1>
+    </div>
+  </section>
+
+  <!-- Sponsor Segment -->
+  <section class="h-fit w-full bg-gradient2 py-6 text-center text-white">
+    <!-- Sponsor Presentation -->
+    <h1 class="text-lg md:text-2xl">Learn more about the movement</h1>
+
+    <!-- Trigger Button -->
+    <p class="text-center"><button id="openPresentation"
+        class="mx-auto mt-[30px] mb-[30px] content-center rounded-xl bg-gamefest px-6 py-2 text-center font-bold text-black duration-200 hover:cursor-pointer hover:brightness-80 md:text-xl">Open
+        Presentation</button></p>
+
+    <!-- Presentation -->
+    <div id="presentationModal" class="fixed inset-0 z-50 hidden snap-y snap-mandatory overflow-y-auto bg-gradient1">
+      <div class="relative mx-auto w-[95%] max-w-5xl rounded-xl text-white">
+        <!-- Close Button -->
+        <button id="closePresentation"
+          class="fixed top-6 right-6 z-50 text-5xl text-white hover:cursor-pointer hover:text-red-500">&times;</button>
+
+        <!-- Slide 1: Welcome -->
+        <section class="flex min-h-screen snap-start flex-col items-center justify-center px-4 text-center">
+          <h1 class="text-5xl font-extrabold text-gamefest">GAMEFEST</h1>
+          <p class="mt-4 max-w-xl text-lg text-gray-300">Welcome to Guyana’s Premier Gaming Festival. Powered by
+            passion, driven by community.</p>
+          <img src="/images/2025/Stock-images/_M3A7960-Enhanced-NR.jpg"
+            alt="Wide shot of GameFest crowd or event banner"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 2: What is GameFest? -->
+        <section class="flex min-h-screen snap-start flex-col justify-center px-4">
+          <h2 class="mb-4 text-4xl font-bold">More Than a Festival — It’s a <span
+              class="font-bold text-gamefest">Movement</span>.</h2>
+          <p class="text-gray-300">GameFest fuses gaming, tech, and culture into a vibrant, one-of-a-kind experience.
+            It’s a safe space for gamers, creators, and brands to connect, compete, and grow.</p>
+          <img src="/images/2025/Stock-images/_M3A9606-Enhanced-NR.jpg" alt="Photo of local players or booths"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 3: Mission -->
+        <section class="flex min-h-screen snap-start flex-col justify-center px-4">
+          <h2 class="mb-2 text-4xl font-bold">Our <span class="font-bold text-gamefest">Mission</span>:</h2>
+          <p class="mb-4 text-xl text-white italic">“Build Esports in Guyana — One Game at a Time.”</p>
+          <ul class="list-inside list-disc space-y-2 text-gray-300">
+            <li>Unite gamers, creatives & communities</li>
+            <li>Support career paths in esports & digital media</li>
+            <li>Position Guyana on the global gaming map</li>
+          </ul>
+          <img src="/images/2025/Stock-images/_M3A7320-Enhanced-NR.jpg"
+            alt="Image of youth gaming together or tech workshops"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 4: Impact -->
+        <section class="flex min-h-screen snap-start flex-col justify-center px-4">
+          <h2 class="mb-2 text-4xl font-bold">The <span class="font-bold text-gamefest">Impact</span> is Real.</h2>
+          <p class="mb-6 text-gray-300">Since launch, GameFest has inspired a growing local gaming community and drawn
+            regional attention.</p>
+          <div class="grid grid-cols-2 gap-4 text-center text-lg font-bold text-black">
+            <div class="rounded-xl bg-white p-4">2 Major Tournaments</div>
+            <div class="rounded-xl bg-white p-4">1K+ Attendees/Event</div>
+          </div>
+          <img src="/images/2025/Stock-images/_M3A7738-Enhanced-NR.jpg" alt="Collage of past events or winner podiums"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 5: Why Partner with GameFest -->
+        <section class="flex min-h-screen snap-start flex-col justify-center px-4">
+          <h2 class="mb-2 text-4xl font-bold">Why Partner with <span class="font-bold text-gamefest">GameFest</span>?
+          </h2>
+          <p class="mb-4 text-xl text-white italic">“It’s not just exposure — it’s alignment with the future.”</p>
+          <ul class="list-inside list-disc space-y-2 text-gray-300">
+            <li>Reach Gen-Z and Millennial gamers through live and digital events</li>
+            <li>On-site & digital branding opportunities</li>
+            <li>Collaborate with a <span class="font-bold text-gamefest">movement</span>, not just a logo</li>
+          </ul>
+          <img src="/images/2025/Stock-images/Sponsors.png"
+            alt="Mockup of brand booth or stream overlay with sponsor logos"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 6: Market Opportunity -->
+        <section class="flex min-h-screen snap-start flex-col justify-center px-4">
+          <h2 class="mb-2 text-4xl font-bold">Guyana’s <span class="font-bold text-gamefest">Untapped</span> Market</h2>
+          <p class="mb-4 text-gray-300">With a digital-first youth base and rising tech access, Guyana is ready for an
+            esports revolution.</p>
+          <div class="text-white">
+            <p>🎮 Youth Population (under 25): <strong>~60%</strong></p>
+            <p>📱 Mobile & Console Use: <strong>Rapidly Rising</strong></p>
+            <p>🌍 First-Mover Brand Advantage: <strong>Wide Open</strong></p>
+          </div>
+          <img src="/images/2025/Stock-images/_M3A9218-Enhanced-NR.jpg" alt="Stat chart or demographic illustration"
+            class="mt-8 h-64 w-full rounded-xl bg-gray-700 object-cover" />
+        </section>
+
+        <!-- Slide 7: Thank You -->
+        <section class="flex min-h-screen snap-start flex-col items-center justify-center px-4 text-center">
+          <h2 class="text-4xl font-bold">Let’s Build the Future <span class="font-bold text-gamefest">Together</span>
+          </h2>
+          <p class="mt-4 text-gray-300">GameFest is where esports, innovation, and opportunity meet.</p>
+          <p class="mt-4 text-lg font-semibold text-white">📧 info@gamefestguyana.com</p>
+          <p class="text-white">📞 +592 655 2280</p>
+        </section>
+      </div>
+    </div>
+
+    <hr class="mx-auto mb-[30px] w-[80%] rounded-2xl border-2 text-gray" />
+    <!-- Sponsor Form -->
+    <h1 class="p-3 text-lg">Interested? Fill out the form and our team will be in contact as soon as possible!</h1>
+
+    <!--Sponsor Form -->
+    <form id="Sponsor-form" class="mx-auto flex max-w-[1200px] flex-row flex-wrap justify-around">
+      <!-- Personal Information -->
+      <div class="mx-auto my-4 w-[90%] max-w-[500px] rounded-[10px] border-[3px] border-white/15 bg-white/5 p-3">
+        <label for="fName" class="text-xl font-medium tracking-[1px]">FIRST NAME</label>
+        <input id="fName" class="mx-auto my-[10px] block w-[80%] rounded-[5px] border-2 border-white/10 bg-white/10 p-2"
+          type="text" required placeholder="John" />
+
+        <label for="lName" class="sponsor-label">LAST NAME</label>
+        <input id="lName" class="sponsor-input" type="text" required placeholder="Doe" />
+
+        <label for="email" class="sponsor-label">EMAIL</label>
+        <input id="email" class="sponsor-input" type="email" required placeholder="you@example.com" />
+
+        <label for="number" class="sponsor-label">PHONE NUMBER</label>
+        <input id="number" class="sponsor-input" type="tel" required placeholder="+592..." />
+      </div>
+
+      <!-- Company Information -->
+      <div class="mx-auto my-4 w-[90%] max-w-[500px] rounded-[10px] border-[3px] border-white/15 bg-white/5 p-3">
+        <label for="cName" class="sponsor-label">COMPANY NAME</label>
+        <input id="cName" class="sponsor-input" type="text" required placeholder="Example Corp." />
+        <label for="cName" class="sponsor-label">COMPANY SECTOR</label>
+        <input id="cName" class="sponsor-input" type="text" required placeholder="E.g. Oil & Gas" />
+        <label for="about" class="sponsor-label">TELL US MORE</label>
+        <textarea id="about" class="sponsor-input h-28 resize-none" required
+          placeholder="Tell us about your business..."></textarea>
+      </div>
+
+      <div class="w-full">
+        <button class="sponsor-submit" id="sponsor-submit">SUBMIT</button>
+      </div>
+
+      <!-- Success Message -->
+      <div id="message" class="mx-auto hidden w-fit">
+        <h1
+          class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-green-500 bg-green-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+          MESSAGE SENT ✓</h1>
+      </div>
+
+      <!-- Failed Message -->
+      <div id="error-message" class="mx-auto hidden w-fit">
+        <h1
+          class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-red-500 bg-red-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+          ERROR: Ensure ALL Fields are filled correctly.</h1>
+      </div>
+    </form>
+  </section>
+
+
+  <!-- Footer -->
+  <footer id="page-footer" class="w-full overflow-x-hidden bg-gray-900 text-white">
+    <!--Gamefest Logo -->
+    <div id="org-logo" class="mx-auto w-full text-center">
+      <img class="mt-[40px] mx-auto w-[min(20vw,200px)]" src="/images/GameFest_Logos/Logo-large.png"
+        alt="Gamefest Logo" />
+    </div>
+
+    <!-- Contact Information -->
+    <div id="contact"
+      class="mx-auto mt-10 flex w-full max-w-[600px] flex-col items-center justify-around gap-y-6 px-4 text-center sm:flex-row">
+      <div id="email" class="">
+        <a class="inline-flex duration-200 ease-in-out hover:text-gamefest" href="mailto:info@gamefestguyana.com">
+          <img src="/images/icons/email.png" class="h-9 w-9" alt="Email address" />
+          <p>info@gamefestguyana.com</p>
+        </a>
+      </div>
+      <div id="phone" class="">
+        <a class="inline-flex duration-200 ease-in-out hover:text-gamefest" href="tel:592-655-2280">
+          <img src="/images/icons/telephone.png" alt="Phone number" class="h-9 w-9" />
+          <p>+592 655-2280</p>
+        </a>
+      </div>
+    </div>
+
+    <!--Social Pages -->
+    <div id="org-info"
+      class="mx-auto mt-10 flex w-full flex-col items-center gap-y-8 px-4 text-center sm:flex-row sm:justify-center sm:gap-x-14">
+      <a class="h-6 w-6" href="https://www.tiktok.com/@gamefestguyana"><img src="/images/icons/tiktok.png" alt="TikTok"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png" alt="Discord"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+          class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
+          src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>
+      <a class="h-6 w-6" href="https://www.instagram.com/gamefestguyana"><img src="/images/icons/instagram-new.png"
+          alt="Instagram" class="h-full w-full object-contain" /></a>
+    </div>
+
+    <!--Footer bottom -->
+    <div id="foot" class="mx-auto mt-10 h-[40px] w-full bg-red-500 text-center items-center">
+      <p class="h-[15px] my-auto">© 2026 Game Fest</p>
+    </div>
+  </footer>
+</body>
+
+</html>
