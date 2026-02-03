@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
+  <link rel="stylesheet" href="/css/output.css" />
+    <title>TMS| Tournament Management System</title>
+</head>
+
+<body>
+    <section class="relative h-screen w-full overflow-hidden bg-gradient2 text-white">
+        <!-- Page Title -->
+        <h1 class="mt-[100px] text-center text-4xl font-extrabold tracking-[4px]">TOURNAMENT MANAGEMENT</h1>
+
+        <!-- Tournament Section -->
+        <div class="mt-[40px] w-full p-4 lg:max-w-[1300px]">
+            <!-- Tournament Management -->
+            <div
+                class="flex-center flex w-fit flex-wrap justify-center gap-4 rounded-[10px] border-white/5 max-md:mx-auto md:border-[3px] md:bg-white/15 md:py-3 md:pr-10 md:pl-3 md:shadow-2xl">
+                <button class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl">+ NEW
+                    TOURNAMENT</button>
+                <button class="rounded-[7px] border-2 border-red-500 bg-red-500 p-3 font-black shadow-2xl">- DELETE
+                    TOURNAMENT</button>
+            </div>
+
+            <!-- Tournaments -->
+            <div class=""></div>
+        </div>
+
+        <!-- Tournament Creation Modal -->
+        <!-- Modal overlay -->
+        <div id="tournamentModal" class="fixed inset-0 z-50 hidden">
+            <!-- Backdrop -->
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+            <!-- Modal panel -->
+            <div class="relative mx-auto flex h-full max-w-3xl items-center justify-center px-4">
+                <form
+                    class="w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/90 text-white shadow-2xl">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between border-b border-white/10 px-6 py-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold tracking-wide">Tournament Registration</h2>
+                            <p class="mt-1 text-sm text-white/70">Add game and tournament details.</p>
+                        </div>
+
+                        <button type="button" id="closeTournamentModal"
+                            class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white">Close</button>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="max-h-[75vh] overflow-y-auto px-6 py-6">
+                        <div class="grid gap-6 md:grid-cols-2">
+                            <!-- Game Information -->
+                            <section class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <h3 class="text-sm font-black tracking-[0.18em] text-white/80">GAME INFORMATION</h3>
+
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="gameName" class="mb-2 block text-sm font-semibold text-white/90">
+                                            Game Name </label>
+                                        <input id="gameName" name="gameName" type="text" placeholder="Call of Duty"
+                                            required
+                                            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                    </div>
+
+                                    <div>
+                                        <span class="mb-2 block text-sm font-semibold text-white/90">Game
+                                            Category</span>
+
+                                        <div class="grid gap-2">
+                                            <label
+                                                class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                                                <span>FPS</span>
+                                                <input type="radio" name="gameCategory" value="FPS" required
+                                                    class="h-4 w-4 accent-yellow-300" />
+                                            </label>
+
+                                            <label
+                                                class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                                                <span>Sports</span>
+                                                <input type="radio" name="gameCategory" value="Sports"
+                                                    class="h-4 w-4 accent-yellow-300" />
+                                            </label>
+
+                                            <label
+                                                class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                                                <span>Fighting</span>
+                                                <input type="radio" name="gameCategory" value="Fighting"
+                                                    class="h-4 w-4 accent-yellow-300" />
+                                            </label>
+
+                                            <label
+                                                class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                                                <span>Other</span>
+                                                <input type="radio" name="gameCategory" value="Other"
+                                                    class="h-4 w-4 accent-yellow-300" />
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="gameIconUrl" class="mb-2 block text-sm font-semibold text-white/90">
+                                            Game Icon URL </label>
+                                        <input id="gameIconUrl" name="gameIconUrl" type="url" placeholder="https://..."
+                                            required
+                                            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                        <p class="mt-2 text-xs text-white/50">Use a direct image link (png/jpg/webp).
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Tournament Information -->
+                            <section class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                                <h3 class="text-sm font-black tracking-[0.18em] text-white/80">TOURNAMENT INFO</h3>
+
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="players" class="mb-2 block text-sm font-semibold text-white/90">
+                                            Number of Players </label>
+                                        <input id="players" name="players" type="number" min="2" step="1"
+                                            placeholder="16" required
+                                            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                    </div>
+
+                                    <div class="grid gap-3 sm:grid-cols-3">
+                                        <div>
+                                            <label for="prize1" class="mb-2 block text-sm font-semibold text-white/90">
+                                                1st Prize </label>
+                                            <input id="prize1" name="prize1" type="number" min="0" step="1"
+                                                placeholder="50000" required
+                                                class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                        </div>
+
+                                        <div>
+                                            <label for="prize2" class="mb-2 block text-sm font-semibold text-white/90">
+                                                2nd Prize </label>
+                                            <input id="prize2" name="prize2" type="number" min="0" step="1"
+                                                placeholder="25000" required
+                                                class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                        </div>
+
+                                        <div>
+                                            <label for="prize3" class="mb-2 block text-sm font-semibold text-white/90">
+                                                3rd Prize </label>
+                                            <input id="prize3" name="prize3" type="number" min="0" step="1"
+                                                placeholder="10000" required
+                                                class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="regCloseDate"
+                                            class="mb-2 block text-sm font-semibold text-white/90"> Registration Close
+                                            Date </label>
+                                        <input id="regCloseDate" name="regCloseDate" type="date" required
+                                            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div
+                        class="flex flex-col gap-3 border-t border-white/10 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                        <p class="text-xs text-white/50">All fields are required.</p>
+
+                        <div class="flex gap-3">
+                            <button type="button" id="cancelTournamentModal"
+                                class="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white">Cancel</button>
+
+                            <button type="submit"
+                                class="rounded-xl bg-yellow-300 px-5 py-3 text-sm font-black tracking-wider text-black transition hover:bg-yellow-200">Create
+                                Tournament</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
