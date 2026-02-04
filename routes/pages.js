@@ -43,4 +43,8 @@ router.get("/Purchase%20Tickets", (req, res)=>{
 router.get("/merch", (req, res)=>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "merchItems", "template.html" ))
 })
+
+router.get("/adminPanel", (req, res)=>{
+    res.sendFile(path.join(__dirname, "..", "views", "pages", "adminPanel.html" ))
+})
 module.exports = router;
