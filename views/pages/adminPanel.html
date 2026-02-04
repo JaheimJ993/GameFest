@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
-  <link rel="stylesheet" href="/css/output.css" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="/js/adminTournament.js" defer></script>
     <title>TMS| Tournament Management System</title>
 </head>
 
@@ -19,7 +20,7 @@
             <!-- Tournament Management -->
             <div
                 class="flex-center flex w-fit flex-wrap justify-center gap-4 rounded-[10px] border-white/5 max-md:mx-auto md:border-[3px] md:bg-white/15 md:py-3 md:pr-10 md:pl-3 md:shadow-2xl">
-                <button class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl">+ NEW
+                <button id="newTournament" class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl">+ NEW
                     TOURNAMENT</button>
                 <button class="rounded-[7px] border-2 border-red-500 bg-red-500 p-3 font-black shadow-2xl">- DELETE
                     TOURNAMENT</button>
@@ -170,7 +171,7 @@
                         <p class="text-xs text-white/50">All fields are required.</p>
 
                         <div class="flex gap-3">
-                            <button type="button" id="cancelTournamentModal"
+                            <button type="button" id="closeTournament"
                                 class="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white">Cancel</button>
 
                             <button type="submit"
