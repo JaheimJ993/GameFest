@@ -1,16 +1,8 @@
-// //This file is strictly for connecting to the database and nothing else
-// const { Pool } = require("pg");
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = 'https://rggseufrcrdcxhuqolye.supabase.co'
+const supabaseKey = 'sb_secret_n3lJuK2SoXb_3qvswGbJow_bkyruRkS'
 
-// //I will instead use env variables for production, but for now we will hardcode
 
-// const pool = new Pool ({
-//     user: 'postgres',
-//     host: 'localhost',
-//     database: 'GameFest',
-//     password: 'Lilpopo2462$@#',
-//     port: 5432
-// });
+const supabase = createClient(supabaseUrl, supabaseKey)
 
-// pool.connect();
-
-// module.exports = pool;
+export default supabase;

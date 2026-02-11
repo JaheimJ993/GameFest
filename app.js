@@ -7,6 +7,7 @@ const games = require("./routes/manage-games")
 const gallery = require("./routes/manage-galleries")
 const pages = require("./routes/pages")
 const mail = require("./routes/SendMail")
+const tournaments = require("./routes/tournaments")
 
 
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use("/admin/dashboard/manage-games", games)
 app.use(gallery)
 app.use(pages)
 app.use(mail)
+app.use(tournaments)
 
 
 //port the server is running on

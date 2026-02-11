@@ -47,4 +47,9 @@ router.get("/merch", (req, res)=>{
 router.get("/adminPanel", (req, res)=>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "adminPanel.html" ))
 })
+
+router.get("/2026", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "views", "pages", "gamefest.html" ))
+})
+
 module.exports = router;

@@ -6,29 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
     <link rel="stylesheet" href="/css/output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/adminTournament.js" defer></script>
-    <title>TMS| Tournament Management System</title>
+    <script src="/js/addTournaments.js" defer></script>
+    <script src="/js/displayTournaments.js" defer></script>
+    <title>TMS | Tournament Management System</title>
 </head>
 
-<body>
-    <section class="relative h-screen w-full overflow-hidden bg-gradient2 text-white">
+<body class="bg-gradient2">
+    <section class="relative h-fit w-full overflow-hidden bg-gradient2 text-white">
         <!-- Page Title -->
-        <h1 class="mt-[100px] text-center text-4xl font-extrabold tracking-[4px]">TOURNAMENT MANAGEMENT</h1>
+        <h1 class="mt-[100px] text-center text-5xl font-extrabold tracking-[4px]">TOURNAMENT MANAGEMENT</h1>
 
         <!-- Tournament Section -->
-        <div class="mt-[40px] w-full p-4 lg:max-w-[1300px]">
+        <div class="mt-[40px] w-full p-4 lg:max-w-[1300px] mx-auto">
             <!-- Tournament Management -->
             <div
-                class="flex-center flex w-fit flex-wrap justify-center gap-4 rounded-[10px] border-white/5 max-md:mx-auto md:border-[3px] md:bg-white/15 md:py-3 md:pr-10 md:pl-3 md:shadow-2xl">
-                <button id="newTournament" class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl">+ NEW
+                class="flex-center flex w-fit flex-wrap justify-center gap-4 rounded-[10px] border-white/5 mx-auto md:bg-white/15 md:py-3 px-4 md:shadow-2xl">
+                <button id="newTournament" class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl hover:brightness-75 duration-200 ease-in-out hover:cursor-pointer">+ NEW
                     TOURNAMENT</button>
-                <button class="rounded-[7px] border-2 border-red-500 bg-red-500 p-3 font-black shadow-2xl">- DELETE
+                <button class="rounded-[7px] border-2 border-red-500 bg-red-500 p-3 font-black shadow-2xl hover:brightness-75 duration-200 ease-in-out hover:cursor-pointer">- DELETE
                     TOURNAMENT</button>
             </div>
 
-            <!-- Tournaments -->
-            <div class=""></div>
         </div>
+
 
         <!-- Tournament Creation Modal -->
         <!-- Modal overlay -->
@@ -123,7 +125,7 @@
                                         <label for="players" class="mb-2 block text-sm font-semibold text-white/90">
                                             Number of Players </label>
                                         <input id="players" name="players" type="number" min="2" step="1"
-                                            placeholder="16" required
+                                            placeholder="1" required max="4"
                                             class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
                                     </div>
 
@@ -174,7 +176,7 @@
                             <button type="button" id="closeTournament"
                                 class="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white">Cancel</button>
 
-                            <button type="submit"
+                            <button type="button" id="createTournament"
                                 class="rounded-xl bg-yellow-300 px-5 py-3 text-sm font-black tracking-wider text-black transition hover:bg-yellow-200">Create
                                 Tournament</button>
                         </div>
@@ -182,6 +184,13 @@
                 </form>
             </div>
         </div>
+    </section>
+
+    <!-- All tournaments display -->
+    <section id="tournamentsDispay" class="h-fit py-4 w-full bg-gradient2 text-white">
+        <h1 class="text-center text-3xl font-extrabold tracking-[5px] md:text-4xl py-4"> ALL TOURNAMENTS</h1>
+        <!-- tournaments Container -->
+        <div id="tournamentContainer" class="mx-auto flex h-fit w-[90%] flex-row justify-center p-4 lg:w-[1200px] flex-wrap gap-y-[15px]"></div>
     </section>
 
 </body>
