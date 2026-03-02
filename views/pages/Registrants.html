@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/loadRegistrants.js"></script>
+    <title>TMS | Registrants</title>
+</head>
+<body class="bg-gradient2">
+        <section class="w-full bg-gradient2 px-4 py-10 text-white">
+            <!-- Back button -->
+            <div>
+                <a>
+                <h1 class="text-2xl text-white/70 hover:text-white hover:cursor-pointer duration-150">&#x21A9; BACK<h1>
+                </a>
+            </div>
+            <div class="mx-auto max-w-6xl">
+                <h1 class="text-center text-3xl font-black tracking-[4px] md:text-5xl">CONTESTANTS</h1>
+                <p class="mt-4 text-center text-base text-white/80 md:text-xl">
+                Manage all contestants participating in the tournament.
+                </p>
+
+                <!-- Table Management -->
+                <div class="flex justify-between p-5 mt-8">
+                    <div>
+                    <button class="border-[3px] px-6 py-2 bg-gradient1 rounded-xl border-white/5 text-white/75 font-bold hover:border-gamefest duration-150">Confirmed</button>
+                    <button class="border-[3px] px-6 py-2 bg-gradient1 rounded-xl border-white/5 text-white/75 font-bold hover:border-gamefest duration-150">Not Confirmed</button>
+                    </div>
+                    <div>
+                    <button class="font-bold border border-red-500 px-6 py-2 rounded-xl bg-red-500 hover:brightness-80 duration-150">DELETE</button>
+                    </div>
+                </div>
+
+                <!-- Table wrapper (mobile horizontal scroll) -->
+                <div class=" overflow-x-auto rounded-2xl border border-white/10 bg-white/5 shadow-2xl">
+                
+                <table class="min-w-[900px] w-full text-left text-sm md:text-base">
+                    <thead class="bg-black/20 text-xs uppercase tracking-wider text-white/70 md:text-sm">
+                    <tr class="[&>th]:px-5 [&>th]:py-4">
+                        <th class="whitespace-nowrap">Team Name</th>
+                        <th class="whitespace-nowrap">Players</th>
+                        <th class="whitespace-nowrap">Contact Number</th>
+                        <th class="whitespace-nowrap">Email Address</th>
+                        <th class="whitespace-nowrap">Confirmation Status</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tableContent" class="divide-y divide-white/10">
+
+                    <!-- Registrant -->
+                    <tr class="transition hover:bg-white/5 [&>td]:px-5 [&>td]:py-4">
+                        <!-- Team Name -->
+                        <td class="font-semibold text-white/90">—</td>
+
+                        <!-- Registrant -->
+                        <td class="text-white/80">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">John Don</span>
+                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Jackie Jackson</span>
+                            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Jaheim Joseph</span>
+                        </div>
+                        </td>
+
+                        <td class="whitespace-nowrap text-white/80">+592 662-8945</td>
+
+                        <td class="whitespace-nowrap text-white/80">
+                        <a class="underline decoration-white/20 underline-offset-4 hover:decoration-white/60" href="mailto:jaheimjoseph993@gmail.com">
+                            jaheimjoseph993@gmail.com
+                        </a>
+                        </td>
+
+                        <td class="whitespace-nowrap">
+                        <select
+                            class="w-full min-w-[180px] cursor-pointer rounded-xl border border-white/10 bg-black/30 px-4 py-2 text-white/90 outline-none transition focus:border-white/25 focus:ring-2 focus:ring-white/10"
+                        >
+                            <option class="bg-zinc-900">Not Confirmed</option>
+                            <option class="bg-zinc-900">Confirmed</option>
+                        </select>
+                        </td>
+                    </tr>
+
+                    <!-- Duplicate <tr> blocks for more contestants -->
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </section>
+</body>
+</html>

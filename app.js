@@ -9,6 +9,7 @@ const gallery = require("./routes/manage-galleries")
 const pages = require("./routes/pages")
 const mail = require("./routes/SendMail")
 const tournaments = require("./routes/tournaments")
+const apiRegistrants = require("./routes/API-registrants")
 
 
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(gallery)
 app.use(pages)
 app.use(mail)
 app.use(tournaments)
+app.use(apiRegistrants)
 
 
 //port the server is running on

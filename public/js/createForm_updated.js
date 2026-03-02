@@ -75,7 +75,6 @@ function initCreateForm() {
                   inputmode="tel"
                   placeholder="e.g., 444-5555"
                   autocomplete="tel"
-                  pattern="\d{3}-\d{4}"
                   title="Number must be entered as follow: 'xxx-xxxx'"
                   required
                   class="w-full rounded-xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-white/30 focus:ring-2 focus:ring-white/10"
@@ -139,3 +138,52 @@ if (document.readyState === "loading") {
 } else {
   initCreateForm();
 }
+
+// createForm.js
+
+document.addEventListener("submit", async (e) => {
+  if (!e.target.matches("#teamRegistrationForm")) return;
+
+  e.preventDefault();
+
+  const form = e.target;
+
+  const teamName = form.querySelector("#teamName")?.value.trim() || null;
+  const phone = form.querySelector("#phone")?.value.trim();
+  const email = form.querySelector("#email")?.value.trim();
+
+  const playersArr = [...form.querySelectorAll('input[name="players[]"]')]
+    .map((i) => i.value.trim())
+    .filter(Boolean);
+
+  if (!phone || !email || playersArr.length === 0) {
+    alert("Please fill Phone, Email, and at least 1 Player name.");
+    return;
+  }
+
+  const tournamentId = window.__TOURNAMENT__?.id ?? null;
+  const teamSize = window.__TOURNAMENT__?.teamSize ?? playersArr.length;
+
+  if (teamSize && playersArr.length !== teamSize) {
+    alert(`Please enter exactly ${teamSize} player name(s).`);
+    return;
+  }
+
+  // JSON column can store arrays directly. If your schema expects an object, use: { players: playersArr }
+  const payload = {
+    tournamentId,
+    teamName: teamSize === 1 ? null : teamName,
+    phone,
+    email,
+    players: playersArr,
+  };
+
+  try {
+    const response = await axios.post("/2026/tournaments/api/register-team", payload);
+    alert("Registration submitted!");
+    form.reset();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to submit registration.");
+  }
+});
