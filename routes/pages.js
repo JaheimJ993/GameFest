@@ -25,10 +25,6 @@ router.get("/Tournament-Signup", (req, res) =>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "register.html"))
 })
 
-router.get("/admin/dashboard", (req, res) =>{
-    res.sendFile(path.join(__dirname, "..", "views", "admin", "dashboard.html" ))
-})
-
 router.get("/2024", (req, res) =>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "2024.html" ))
 })

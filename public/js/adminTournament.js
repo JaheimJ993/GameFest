@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         e.preventDefault()
 
         tournamentModal.classList.add("hidden");
-
+        
     })
     
 
