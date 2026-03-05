@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
+const { injectSpeedInsights } = require("@vercel/speed-insights")
 //Importing all Middleware Files
 const cookieParser = require("cookie-parser");
 const adminAuthRouter = require("./routes/adminAuth.cjs");
@@ -36,6 +37,7 @@ app.use(tournaments)
 app.use(apiRegistrants)
 app.use(admin)
 
+injectSpeedInsights()
 
 
 //port the server is running on
