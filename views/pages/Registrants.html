@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/loadRegistrants.js" defer></script>
+  <title>TMS | Registrants</title>
+</head>
+
+<body class="bg-gradient2">
+  <section class="w-full bg-gradient2 px-4 py-10 text-white">
+    <!-- Back button -->
+    <div>
+      <a href="/adminPanel">
+        <h1 class="text-2xl text-white/70 hover:text-white hover:cursor-pointer duration-150">&#x21A9; BACK</h1>
+      </a>
+    </div>
+
+    <div class="mx-auto max-w-6xl">
+      <h1 class="text-center text-3xl font-black tracking-[4px] md:text-5xl">CONTESTANTS</h1>
+      <p class="mt-4 text-center text-base text-white/80 md:text-xl">
+        Manage all contestants participating in the tournament.
+      </p>
+
+      <!-- Table Management -->
+      <div class="mt-8 flex justify-between p-5">
+        <div class="flex gap-2">
+          <button id="filterConfirmed"
+            class="border-[3px] px-6 py-2 bg-gradient1 rounded-xl border-white/5 text-white/75 font-bold hover:border-gamefest duration-150">
+            Confirmed
+          </button>
+
+          <button id="filterNotConfirmed"
+            class="border-[3px] px-6 py-2 bg-gradient1 rounded-xl border-white/5 text-white/75 font-bold hover:border-gamefest duration-150">
+            Not Confirmed
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <p class="hidden text-sm text-white/60 md:block">Click a row to select it, then delete.</p>
+          <button id="deleteSelected" disabled
+            class="font-bold border border-red-500 px-6 py-2 rounded-xl bg-red-500/60 text-white/80 opacity-60 cursor-not-allowed transition hover:brightness-80 duration-150 disabled:hover:brightness-100">
+            DELETE
+          </button>
+        </div>
+      </div>
+
+      <!-- Table wrapper (mobile horizontal scroll) -->
+      <div class="relative overflow-x-auto rounded-2xl border border-white/10 bg-white/5 shadow-2xl">
+        <!-- LOADER OVERLAY -->
+        <div id="tableLoader" class="absolute inset-0 z-10 hidden items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div class="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-white"></div>
+        </div>
+
+        <table class="min-w-[900px] w-full text-left text-sm md:text-base">
+          <thead class="bg-black/20 text-xs uppercase tracking-wider text-white/70 md:text-sm">
+            <tr class="[&>th]:px-5 [&>th]:py-4">
+              <th class="whitespace-nowrap">Team Name</th>
+              <th class="whitespace-nowrap">Players</th>
+              <th class="whitespace-nowrap">Contact Number</th>
+              <th class="whitespace-nowrap">Email Address</th>
+              <th class="whitespace-nowrap">Confirmation Status</th>
+            </tr>
+          </thead>
+
+          <!-- IMPORTANT: tbody starts empty; JS renders rows -->
+          <tbody id="tableContent" class="divide-y divide-white/10"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

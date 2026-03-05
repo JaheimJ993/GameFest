@@ -25,10 +25,6 @@ router.get("/Tournament-Signup", (req, res) =>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "register.html"))
 })
 
-router.get("/admin/dashboard", (req, res) =>{
-    res.sendFile(path.join(__dirname, "..", "views", "admin", "dashboard.html" ))
-})
-
 router.get("/2024", (req, res) =>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "2024.html" ))
 })
@@ -43,4 +39,16 @@ router.get("/Purchase%20Tickets", (req, res)=>{
 router.get("/merch", (req, res)=>{
     res.sendFile(path.join(__dirname, "..", "views", "pages", "merchItems", "template.html" ))
 })
+
+router.get("/adminPanel", (req, res)=>{
+    res.sendFile(path.join(__dirname, "..", "views", "pages", "adminPanel.html" ))
+})
+
+router.get("/2026", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "views", "pages", "gamefest.html" ))
+})
+router.get("/adminPanel/tournaments", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "views", "pages", "Registrants.html" ))
+})
+
 module.exports = router;
