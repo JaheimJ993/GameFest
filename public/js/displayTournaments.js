@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tournamentContainer = document.getElementById("tournamentContainer");
   const loader = document.getElementById("tournamentsLoader");
+  const loaderText = document.getElementById("tournamentsLoaderText");
   const deleteBtn = document.getElementById("deleteTournament");
 
   const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
@@ -8,8 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedTournamentId = null;
   let selectedCard = null;
 
-  const setLoading = (isLoading) => {
+  const setLoading = (isLoading, message = "Please wait while tournament data is fetched.") => {
     if (!loader) return;
+    if (loaderText) loaderText.textContent = message;
     loader.classList.toggle("hidden", !isLoading);
     loader.classList.toggle("flex", isLoading);
   };
@@ -149,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadTournaments = async () => {
     if (!tournamentContainer) return;
 
-    setLoading(true);
+    setLoading(true, "Please wait while tournament data is fetched.");
     try {
       const res = await axios.get("/admin/api/getTournaments");
       const tournaments = res.data?.data ?? [];
@@ -157,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.__ADMIN_TOURNAMENTS__ = tournaments;
 
       tournamentContainer.innerHTML = "";
+      tournamentContainer.scrollTop = 0;
       clearSelection();
 
       if (!tournaments.length) {
@@ -197,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!ok) return;
 
       deleteBtn.disabled = true;
+      setLoading(true, "Deleting tournament...");
 
       try {
         await axios.delete(`/admin/api/tournaments/${selectedTournamentId}`);
@@ -213,6 +217,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         console.log(err);
         setDeleteEnabled(!!selectedTournamentId);
+      } finally {
+        setLoading(false);
       }
     });
   }
