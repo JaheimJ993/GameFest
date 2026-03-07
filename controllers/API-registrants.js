@@ -7,7 +7,6 @@ const normalize = (v) => String(v ?? "").trim();
 const normalizeName = (v) => normalize(v).replace(/\s+/g, " "); // collapse internal whitespace
 
 const isValidEmail = (email) => {
-  // Simple, safe email check (front-end already uses type="email")
   const e = normalize(email);
   if (!e || e.length > 80) return false;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
@@ -29,17 +28,12 @@ const submitRegistrants = async (req, res) => {
   const tournamentIdRaw = req.body?.tournamentId;
   const tournamentId = Number(tournamentIdRaw);
 
-  // Accept both teamName and team_name (in case older clients send team_name)
   const teamNameRaw = req.body?.teamName ?? req.body?.team_name ?? null;
-
-  // Accept both phone and number (in case older clients send number)
   const phoneRaw = req.body?.phone ?? req.body?.number ?? null;
-
   const emailRaw = req.body?.email ?? null;
 
   let playersRaw = req.body?.players ?? [];
 
-  // Players can sometimes arrive as JSON string; normalize to array
   if (typeof playersRaw === "string") {
     try {
       playersRaw = JSON.parse(playersRaw);
@@ -53,10 +47,9 @@ const submitRegistrants = async (req, res) => {
   }
 
   const phone = normalize(phoneRaw);
-  const email = normalize(emailRaw).toLowerCase(); // store and compare consistently
+  const email = normalize(emailRaw).toLowerCase();
   const teamName = teamNameRaw === null ? null : normalizeName(teamNameRaw);
 
-  // players array normalization
   const players = Array.isArray(playersRaw)
     ? playersRaw.map((p) => normalizeName(p)).filter(Boolean)
     : [];
@@ -88,7 +81,6 @@ const submitRegistrants = async (req, res) => {
   }
 
   try {
-    // Fetch tournament to validate team size + team-name requirement
     const { data: tournament, error: tourneyErr } = await supabase
       .from("Tournaments")
       .select("id, team_size")
@@ -120,8 +112,6 @@ const submitRegistrants = async (req, res) => {
       });
     }
 
-    // Duplicate protection (email/phone per tournament)
-    // Use ilike for case-insensitive exact match.
     const { data: existingByEmail, error: emailCheckErr } = await supabase
       .from("Registrants")
       .select("registration_id")
@@ -156,8 +146,6 @@ const submitRegistrants = async (req, res) => {
       });
     }
 
-    // Optional: prevent players being registered twice for the same tournament
-    // (Soft check: fetch existing players for tournament and compare)
     const { data: existingPlayersRows, error: playersCheckErr } = await supabase
       .from("Registrants")
       .select("players")
@@ -185,14 +173,13 @@ const submitRegistrants = async (req, res) => {
       });
     }
 
-    // Insert
     const { data, error } = await supabase
       .from("Registrants")
       .insert({
         tournament_id: tournamentId,
         team_name: teamSize > 1 ? teamName : null,
         number: phone,
-        email, // stored lowercased
+        email,
         players,
         reg_confirmed: false,
       })
@@ -200,7 +187,6 @@ const submitRegistrants = async (req, res) => {
       .single();
 
     if (error) {
-      // If you add DB unique constraints, map duplicates cleanly:
       if (error?.code === "23505") {
         return res.status(409).json({
           message: "error",
@@ -217,16 +203,20 @@ const submitRegistrants = async (req, res) => {
 };
 
 const getRegistrants = async (req, res) => {
-  const { id, confirmed } = req.query;
+  const tournamentId = Number(req.query?.id);
+  const { confirmed } = req.query;
 
-  if (!id) {
-    return res.status(400).json({ message: "error", error: "Missing tournament id" });
+  if (!Number.isFinite(tournamentId) || tournamentId <= 0) {
+    return res.status(400).json({ message: "error", error: "Missing or invalid tournament id" });
   }
 
   try {
-    let query = supabase.from("Registrants").select().eq("tournament_id", id);
+    let query = supabase
+      .from("Registrants")
+      .select()
+      .eq("tournament_id", tournamentId)
+      .order("registration_id", { ascending: false });
 
-    // Optional filter: confirmed=true/false
     if (confirmed !== undefined) {
       const confirmedBool = confirmed === "true" || confirmed === true;
       query = query.eq("reg_confirmed", confirmedBool);
