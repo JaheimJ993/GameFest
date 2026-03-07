@@ -9,6 +9,8 @@
     <link rel="icon" href="images/GameFest_Logos/Logo-small.png" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/getTournaments.js" defer></script>
+    <script src="/js/dynamic-head.js" defer></script>
+    <script src="/js/cosplay-submit.js" defer></script>
     <title>GAMEFEST | 2026 Edition</title>
 </head>
 
@@ -93,7 +95,7 @@
                         alt="TikTok" class="h-full w-full object-contain" /></a>
                 <a class="h-10 w-10" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png"
                         alt="Discord" class="h-full w-full object-contain" /></a>
-                <a class="h-10 w-10" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+                <a class="h-10 w-10" href="https://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
                         class="h-full w-full object-contain" /></a>
                 <a class="h-10 w-10" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
                         src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>
@@ -192,6 +194,20 @@
             </p>
 
             <div class="mt-[35px] flex flex-col gap-[20px] lg:flex-row">
+
+                <div id="message" class="mx-auto w-fit hidden">
+                    <h1
+                        class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-green-500 bg-green-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+                        EMAIL SENT ✓</h1>
+                </div>
+                
+                <!-- Failed Message -->
+                <div id="error-message" class="mx-auto hidden w-fit">
+                    <h1
+                        class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-red-500 bg-red-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+                        ERROR: Ensure ALL Fields are filled correctly.</h1>
+                </div>
+
                 <!-- Left side -->
                 <div
                     class="relative min-h-[420px] w-full overflow-hidden rounded-[28px] border border-white/10 lg:w-1/2">
@@ -219,7 +235,7 @@
                 <!-- Right side -->
                 <div
                     class="w-full rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_0_30px_rgba(0,0,0,0.18)] backdrop-blur-sm md:p-8 lg:w-1/2">
-                    <form class="flex flex-col gap-y-5">
+                    <form id="cosplay-form" class="flex flex-col gap-y-5">
                         <div>
                             <label for="cosplay-name" class="mb-2 block text-sm font-bold tracking-[2px]">FULL
                                 NAME</label>
@@ -241,25 +257,12 @@
                                 class="w-full rounded-[16px] border border-white/15 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-white/45 focus:border-yellow-300" />
                         </div>
 
-                        <div>
-                            <label for="cosplay-character" class="mb-2 block text-sm font-bold tracking-[2px]">CHARACTER
-                                / COSPLAY</label>
-                            <input id="cosplay-character" name="character" type="text"
-                                placeholder="Who are you cosplaying?"
-                                class="w-full rounded-[16px] border border-white/15 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-white/45 focus:border-yellow-300" />
-                        </div>
-
-                        <div>
-                            <label for="cosplay-notes" class="mb-2 block text-sm font-bold tracking-[2px]">EXTRA
-                                DETAILS</label>
-                            <textarea id="cosplay-notes" name="notes" rows="5"
-                                placeholder="Tell us anything important about your cosplay"
-                                class="w-full resize-none rounded-[16px] border border-white/15 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-white/45 focus:border-yellow-300"></textarea>
-                        </div>
-
-                        <button type="submit"
-                            class="mt-2 w-fit rounded-full border-3 border-yellow-300 bg-yellow-300 px-6 py-3 font-semibold tracking-[2px] text-black duration-200 hover:brightness-90">
-                            SIGN UP NOW
+                        <button id="cosplay-submit"
+                            class="mt-2 inline-flex w-fit items-center justify-center gap-3 rounded-full border-3 border-yellow-300 bg-yellow-300 px-6 py-3 font-semibold tracking-[2px] text-black duration-200 hover:brightness-90 disabled:cursor-not-allowed disabled:brightness-90">
+                            <span id="cosplay-submit-text">SIGN UP NOW</span>
+                            <span id="cosplay-submit-spinner"
+                                class="hidden h-5 w-5 animate-spin rounded-full border-2 border-black/25 border-t-black"
+                                aria-hidden="true"></span>
                         </button>
                     </form>
                 </div>
@@ -300,7 +303,7 @@
             class="h-full w-full object-contain" /></a>
         <a class="h-6 w-6" href="https://discord.gg/eqWkeKtRcW"><img src="/images/icons/discord-logo.png" alt="Discord"
             class="h-full w-full object-contain" /></a>
-        <a class="h-6 w-6" href="http://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
+        <a class="h-6 w-6" href="https://wa.me/5926552280"><img src="/images/icons/whatsapp.png" alt="WhatsApp"
             class="h-full w-full object-contain" /></a>
         <a class="h-6 w-6" href="https://www.facebook.com/p/Game-Fest-Guyana-61555989910571/"><img
             src="/images/icons/facebook-new.png" alt="Facebook" class="h-full w-full object-contain" /></a>

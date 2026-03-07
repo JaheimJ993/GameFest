@@ -594,4 +594,120 @@ const sponsor = async (req, res) => {
   }
 }
 
-module.exports = { contact, sponsor };
+// Function to send information from the cosplay Sign up to the email
+const cosplaySignup = async (req, res) => {
+  const { Name, Email, Number } = req.body;
+
+  const info = await transporter.sendMail({
+    from: `${Name} <${Email}>`,
+    to: 'jaheimjoseph993@gmail.com',
+    subject: `Cosplay Signup | ${Name}`,
+    text: `
+      New Cosplay Signup - GameFest
+
+      Name: ${Name}
+      Email: ${Email}
+      Number: ${Number}
+      `,
+      html: `
+        <div style="margin:0; padding:0; background-color:#0b0b0f; font-family:Arial, Helvetica, sans-serif; color:#ffffff;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0b0b0f; margin:0; padding:30px 0;">
+            <tr>
+              <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:650px; background:#11131a; border:1px solid #232734; border-radius:16px; overflow:hidden;">
+                  
+                  <!-- Header -->
+                  <tr>
+                    <td style="background:linear-gradient(135deg, #ffff5b 0%, #ffb800 100%); padding:28px 32px; text-align:center;">
+                      <h1 style="margin:0; font-size:30px; line-height:1.2; color:#111111; font-weight:900; letter-spacing:2px;">
+                        GAMEFEST
+                      </h1>
+                      <p style="margin:8px 0 0; font-size:14px; color:#1b1b1b; font-weight:700; letter-spacing:3px;">
+                        COSPLAY SIGNUP
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Intro -->
+                  <tr>
+                    <td style="padding:32px;">
+                      <p style="margin:0 0 20px; font-size:16px; line-height:1.7; color:#d8dbe5;">
+                        A new participant has submitted a <span style="color:#ffff5b; font-weight:700;">GameFest Cosplay Signup</span>.
+                      </p>
+
+                      <!-- Info Card -->
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#171a22; border:1px solid #2a3040; border-radius:12px;">
+                        <tr>
+                          <td style="padding:24px;">
+                            
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                              <tr>
+                                <td style="padding:0 0 14px; font-size:13px; color:#8f97ab; text-transform:uppercase; letter-spacing:1px;">
+                                  Full Name
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:0 0 20px; font-size:18px; color:#ffffff; font-weight:700; border-bottom:1px solid #2a3040;">
+                                  ${Name}
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td style="padding:20px 0 14px; font-size:13px; color:#8f97ab; text-transform:uppercase; letter-spacing:1px;">
+                                  Email Address
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:0 0 20px; font-size:18px; color:#ffffff; font-weight:700; border-bottom:1px solid #2a3040;">
+                                  <a href="mailto:${Email}" style="color:#ffffff; text-decoration:none;">${Email}</a>
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td style="padding:20px 0 14px; font-size:13px; color:#8f97ab; text-transform:uppercase; letter-spacing:1px;">
+                                  Contact Number
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:0; font-size:18px; color:#ffffff; font-weight:700;">
+                                  <a href="tel:${Number}" style="color:#ffffff; text-decoration:none;">${Number}</a>
+                                </td>
+                              </tr>
+                            </table>
+
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Footer Note -->
+                      <p style="margin:24px 0 0; font-size:14px; line-height:1.7; color:#aab1c3;">
+                        Review this signup and follow up with the participant for next steps regarding their cosplay entry.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="padding:20px 32px; background:#0f1117; border-top:1px solid #232734; text-align:center;">
+                      <p style="margin:0; font-size:12px; line-height:1.6; color:#7f8798; letter-spacing:1px;">
+                        GAMEFEST GUYANA • ESPORTS • COMMUNITY • COMPETITION
+                      </p>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+    `
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Cosplay signup submitted successfully",
+    info
+  });
+};
+
+module.exports = { contact, sponsor,cosplaySignup };
