@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "client", "public")))
 
 // Admin routers
-app.get("/admin/login", (req, res)=> res.sendFile(path.join(__dirname, "views", "pages", "login.html")))
+app.get("/admin/login", (req, res)=> res.sendFile(path.join(__dirname, "..", "client", "views", "admin", "login.html")))
 app.use("/admin/auth", adminAuthRouter)
 app.use("/admin/tournaments/api", requireAdmin);
 app.use("/admin", requireAdmin)

@@ -12,7 +12,7 @@ router.put("/admin/api/tournaments/:id", updateTournament);
 router.delete("/admin/api/tournaments/:id", deleteTournament);
 
 router.get("/2026/tournaments/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "views", "pages", "2026-details.html"));
+  res.sendFile(path.join(__dirname, "..", "..", "client", "views", "public", "tournament-details.html"));
 });
 
 module.exports = router;

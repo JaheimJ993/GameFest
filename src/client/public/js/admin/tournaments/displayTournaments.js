@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="mx-auto w-fit">
-        <a href="adminPanel/tournaments?tournament-id=${t.id}">
+        <a href="/TMS/tournaments?tournament-id=${t.id}">
           <button class="rounded-[10px] border border-gamefest bg-gamefest px-6 py-4 text-xl font-bold text-black duration-150 hover:cursor-pointer hover:brightness-75">
             More Details
           </button>

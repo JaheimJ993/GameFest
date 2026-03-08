@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     exportConfirmedBtn.textContent = "EXPORTING...";
 
     try {
-      const res = await axios.get("/adminPanel/tournaments/api/registrants", {
+      const res = await axios.get("/TMS/tournaments/api/registrants", {
         params: {
           id,
           confirmed: true,
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
 
     try {
-      const res = await axios.get("/adminPanel/tournaments/api/registrants", {
+      const res = await axios.get("/TMS/tournaments/api/registrants", {
         params: {
           id,
           ...(filter === null ? {} : { confirmed: filter }),
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
     select.disabled = true;
 
     try {
-      await axios.patch("/adminPanel/tournaments/api/registrants/confirmation", {
+      await axios.patch("/TMS/tournaments/api/registrants/confirmation", {
         registrationId,
         reg_confirmed: newValue,
       });
@@ -523,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteBtn.disabled = true;
 
       try {
-        await axios.delete(`/adminPanel/tournaments/api/registrants/${selectedRegistrationId}`);
+        await axios.delete(`/TMS/tournaments/api/registrants/${selectedRegistrationId}`);
         clearSelection();
         await loadRegistrants(currentFilter);
       } catch (err) {

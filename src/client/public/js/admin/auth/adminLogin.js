@@ -61,7 +61,7 @@
         return;
       }
 
-      window.location.href = "/adminPanel";
+      window.location.href = "/TMS/dashboard";
     } catch (err) {
       console.error(err);
       showErrors(["Login failed. Please try again."]);

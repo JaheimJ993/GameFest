@@ -2,12 +2,12 @@ const express = require("express")
 const router = express.Router()
 const path = require("path");
 
-router.get("/admin/tournaments", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "Registrants.html" ))
+router.get("/TMS/tournaments", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "..", "client", "views", "admin", "registrants.html" ))
 })
 
-router.get("/admin/dashboard", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "adminPanel.html" ))
+router.get("/TMS/dashboard", (req, res)=>{
+    res.sendFile(path.join(__dirname, "..", "..", "client", "views", "admin", "dashboard.html" ))
 })
 
 
