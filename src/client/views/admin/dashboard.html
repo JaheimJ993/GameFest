@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/GameFest_Logos/Logo-small.png" />
+  <link rel="stylesheet" href="/css/output.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/js/adminTournament.js" defer></script>
+  <script src="/js/addTournaments.js" defer></script>
+  <script src="/js/displayTournaments.js" defer></script>
+  <script src="/js/editTournament.js" defer></script>
+  <title>TMS | Dashboard</title>
+  <style>
+    .scrollbar-hidden {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .scrollbar-hidden::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient2">
+  <a href="/" class="text-white ml-3 pt-3 hover:underline duration-100">
+    <h1 class="pl-4">Back to Main Website</h1>
+  </a>
+
+  <section class="relative h-fit w-full overflow-hidden bg-gradient2 text-white">
+    <h1 class="mt-[100px] text-center text-5xl font-extrabold tracking-[4px]">TOURNAMENT MANAGEMENT</h1>
+
+    <div class="mt-[40px] w-full p-4 lg:max-w-[1300px] mx-auto">
+      <div
+        class="flex-center flex w-fit flex-wrap justify-center gap-4 rounded-[10px] border-white/5 mx-auto md:bg-white/15 md:py-3 px-4 md:shadow-2xl">
+        <button id="newTournament"
+          class="rounded-[7px] border-2 border-green-500 bg-green-500 p-3 font-black shadow-2xl hover:brightness-75 duration-200 ease-in-out hover:cursor-pointer">
+          + NEW TOURNAMENT
+        </button>
+
+        <button id="editTournament" type="button" disabled
+          class="rounded-[7px] border-2 border-yellow-500 bg-yellow-500/60 p-3 font-black shadow-2xl text-white/80 opacity-60 cursor-not-allowed transition hover:brightness-75 duration-200 ease-in-out disabled:hover:brightness-100">
+          EDIT TOURNAMENT
+        </button>
+
+        <button id="deleteTournament" disabled
+          class="rounded-[7px] border-2 border-red-500 bg-red-500/60 p-3 font-black shadow-2xl text-white/80 opacity-60 cursor-not-allowed transition hover:brightness-75 duration-200 ease-in-out disabled:hover:brightness-100">
+          - DELETE TOURNAMENT
+        </button>
+
+        <p class="w-full text-center text-sm text-white/60 md:w-auto md:text-left h-fit my-auto">
+          Click a tournament card to select it, then edit or delete.
+        </p>
+      </div>
+    </div>
+
+    <div id="tournamentModal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+      <div class="relative mx-auto flex h-full max-w-3xl items-center justify-center px-4">
+        <form id="tournamentCreateForm"
+          class="w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/90 text-white shadow-2xl"
+          novalidate>
+          <div class="flex items-center justify-between border-b border-white/10 px-6 py-4">
+            <div>
+              <h2 class="text-xl font-extrabold tracking-wide">Tournament Registration</h2>
+              <p class="mt-1 text-sm text-white/70">Add game and tournament details.</p>
+            </div>
+
+            <button type="button" id="closeTournamentModal"
+              class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white">
+              Close
+            </button>
+          </div>
+
+          <div class="max-h-[75vh] overflow-y-auto px-6 py-6">
+            <div id="tournamentErrorDropdown"
+              class="hidden mb-6 overflow-hidden rounded-2xl border border-red-500/25 bg-red-500/10 shadow-2xl">
+              <div class="flex items-start justify-between gap-4 px-5 py-4">
+                <div>
+                  <h3 class="text-sm font-black tracking-[0.12em] text-red-300">PLEASE FIX THE FOLLOWING</h3>
+                  <ul id="tournamentErrorList" class="mt-3 list-disc space-y-1 pl-5 text-sm text-white/90"></ul>
+                </div>
+                <button type="button" id="closeTournamentError"
+                  class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/80 transition hover:bg-white/10 hover:text-white">
+                  Close
+                </button>
+              </div>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2">
+              <section class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <h3 class="text-sm font-black tracking-[0.18em] text-white/80">GAME INFORMATION</h3>
+
+                <div class="mt-4 space-y-4">
+                  <div>
+                    <label for="gameName" class="mb-2 block text-sm font-semibold text-white/90">Game Name</label>
+                    <input id="gameName" name="gameName" type="text" placeholder="Call of Duty" required minlength="2"
+                      maxlength="60"
+                      class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                  </div>
+
+                  <div>
+                    <span class="mb-2 block text-sm font-semibold text-white/90">Game Category</span>
+
+                    <div class="grid gap-2">
+                      <label
+                        class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>FPS</span>
+                        <input type="radio" name="gameCategory" value="FPS" required class="h-4 w-4 accent-yellow-300" />
+                      </label>
+
+                      <label
+                        class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>Sports</span>
+                        <input type="radio" name="gameCategory" value="Sports" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+
+                      <label
+                        class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>Fighting</span>
+                        <input type="radio" name="gameCategory" value="Fighting" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+
+                      <label
+                        class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>Other</span>
+                        <input type="radio" name="gameCategory" value="Other" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="gameIconUrl" class="mb-2 block text-sm font-semibold text-white/90">Game Icon URL</label>
+                    <input id="gameIconUrl" name="gameIconUrl" type="url" placeholder="https://..." required
+                      class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                    <p class="mt-2 text-xs text-white/50">Use a direct image link (png/jpg/webp).</p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <h3 class="text-sm font-black tracking-[0.18em] text-white/80">TOURNAMENT INFO</h3>
+
+                <div class="mt-4 space-y-4">
+                  <div>
+                    <label for="players" class="mb-2 block text-sm font-semibold text-white/90">Number of Players</label>
+                    <input id="players" name="players" type="number" min="1" step="1" placeholder="1" required max="4"
+                      class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                  </div>
+
+                  <div>
+                    <span class="mb-2 block text-sm font-semibold text-white/90">Platforms</span>
+                    <div class="grid gap-2">
+                      <label class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>Mobile</span>
+                        <input type="checkbox" name="platforms" value="Mobile" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+                      <label class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>PC</span>
+                        <input type="checkbox" name="platforms" value="PC" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+                      <label class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>Xbox</span>
+                        <input type="checkbox" name="platforms" value="Xbox" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+                      <label class="flex cursor-pointer items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 transition hover:bg-white/5">
+                        <span>PS5</span>
+                        <input type="checkbox" name="platforms" value="PS5" class="h-4 w-4 accent-yellow-300" />
+                      </label>
+                    </div>
+                    <p class="mt-2 text-xs text-white/50">Select one or more platforms.</p>
+                  </div>
+
+                  <div>
+                    <label for="regFee" class="mb-2 block text-sm font-semibold text-white/90">Registration Fee</label>
+                    <input id="regFee" name="regFee" type="number" min="0" step="1" placeholder="2500" required
+                      class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                  </div>
+
+                  <div class="grid gap-3 sm:grid-cols-3">
+                    <div>
+                      <label for="prize1" class="mb-2 block text-sm font-semibold text-white/90">1st Prize</label>
+                      <input id="prize1" name="prize1" type="number" min="0" step="1" placeholder="50000" required
+                        class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                    </div>
+                    <div>
+                      <label for="prize2" class="mb-2 block text-sm font-semibold text-white/90">2nd Prize</label>
+                      <input id="prize2" name="prize2" type="number" min="0" step="1" placeholder="25000" required
+                        class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                    </div>
+                    <div>
+                      <label for="prize3" class="mb-2 block text-sm font-semibold text-white/90">3rd Prize</label>
+                      <input id="prize3" name="prize3" type="number" min="0" step="1" placeholder="10000" required
+                        class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none placeholder:text-white/40 focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="regCloseDate" class="mb-2 block text-sm font-semibold text-white/90">Registration Close Date</label>
+                    <input id="regCloseDate" name="regCloseDate" type="date" required
+                      class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white transition outline-none focus:border-yellow-300/60 focus:ring-2 focus:ring-yellow-300/20" />
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 border-t border-white/10 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs text-white/50">All fields are required.</p>
+
+            <div class="flex gap-3">
+              <button type="button" id="closeTournament"
+                class="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white">
+                Cancel
+              </button>
+
+              <button type="button" id="createTournament"
+                class="rounded-xl bg-yellow-300 px-5 py-3 text-sm font-black tracking-wider text-black transition hover:bg-yellow-200">
+                Create Tournament
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="tournamentsDispay" class="h-fit py-4 w-full bg-gradient2 text-white ">
+    <h1 class="text-center text-3xl font-extrabold tracking-[5px] md:text-4xl py-4">ALL TOURNAMENTS</h1>
+
+    <div class="relative mx-auto w-[94%] lg:w-[1400px]">
+      <div id="tournamentsLoader"
+        class="absolute inset-0 z-10 hidden items-center justify-center rounded-2xl bg-black/60 backdrop-blur-md">
+        <div class="flex min-w-[260px] flex-col items-center gap-4 rounded-2xl border border-white/10 bg-black/35 px-8 py-7 text-center shadow-2xl">
+          <div class="relative h-16 w-16">
+            <div class="absolute inset-0 rounded-full border-[5px] border-white/10"></div>
+            <div class="absolute inset-0 animate-spin rounded-full border-[5px] border-transparent border-t-yellow-300 border-r-yellow-300"></div>
+          </div>
+          <div>
+            <p class="text-sm font-black tracking-[0.22em] text-white/90">LOADING TOURNAMENTS</p>
+            <p id="tournamentsLoaderText" class="mt-2 text-xs text-white/60">Please wait while tournament data is fetched.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tournamentContainer"
+        class="scrollbar-hidden mx-auto flex h-[72vh] min-h-[460px] max-h-[900px] w-full flex-row flex-wrap content-start justify-center gap-x-4 gap-y-[15px] overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl"></div>
+    </div>
+  </section>
+</body>
+
+</html>
