@@ -4,51 +4,46 @@ const path = require("path");
 
 
 router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "views", "index.html"));
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "index.html"))
 });
 
 router.get("/about", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "about.html"))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "about.html"))
 })
 
 router.get("/dashboard", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "dashboard.html"))
-})
-router.get("/Store", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "Store.html"))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "dashboard.html"))
 })
 
 router.get("/Sponsor", (req, res) =>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "sponsor.html"))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "sponsor.html"))
 })
+
 router.get("/Tournament-Signup", (req, res) =>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "register.html"))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "register.html"))
 })
 
 router.get("/2024", (req, res) =>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "2024.html" ))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "gamefest-2024.html" ))
 })
 
 router.get("/2025", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "2025.html" ))
-})
-router.get("/Purchase%20Tickets", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "Tickets.html" ))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "gamefest-2025.html" ))
 })
 
 router.get("/merch", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "merchItems", "template.html" ))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "template.html" ))
 })
 
-router.get("/adminPanel", (req, res)=>{
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "adminPanel.html" ))
+router.get("/TMS", (req, res)=>{
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "dashboard.html" ))
 })
 
 router.get("/2026", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "gamefest.html" ))
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "gamefest.html" ))
 })
-router.get("/adminPanel/tournaments", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "views", "pages", "Registrants.html" ))
+router.get("/TMS/tournaments", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "registrants.html" ))
 })
 
 module.exports = router;

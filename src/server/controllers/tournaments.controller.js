@@ -1,4 +1,4 @@
-import supabase from "../config/db.js";
+const supabase = require("../config/db");
 
 const normalize = (v) => String(v ?? "").trim().replace(/\s+/g, " ");
 const toInt = (v) => {
@@ -271,4 +271,4 @@ const getTournament = async (req, res) => {
   }
 };
 
-export { newTournament, getTournaments, getTournament, updateTournament };
+module.exports = { newTournament, getTournaments, getTournament, updateTournament };

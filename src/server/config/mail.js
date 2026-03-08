@@ -1,6 +1,5 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
-//The transporter is what is used to send the emails.
 const transporter = nodemailer.createTransport({
   host: process.env.BREVO_SMTP_HOST,
   port: Number(process.env.BREVO_SMTP_PORT) || 587,
@@ -11,4 +10,4 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = [transporter]
+module.exports = transporter;

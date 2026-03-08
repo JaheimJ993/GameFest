@@ -144,7 +144,7 @@
 
 @media (max-width: 768px) {
   .hero-bg-layer {
-    background-image: url("/images/Homepage/GroupPic.jpeg");
+    background-image: url("/images/home/GroupPic.jpeg");
     background-size: cover auto;
     background-repeat: no-repeat;
     background-position: 100% center;
@@ -155,7 +155,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("/images/Homepage/Staff-2025.jpg");
+    background-image: url("/images/home/Staff-2025.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% center;
@@ -169,7 +169,7 @@
 
 @media (min-width: 769px) {
   .hero-bg-layer {
-    background-image: url("/images/Homepage/GroupPic.jpeg");
+    background-image: url("/images/home/GroupPic.jpeg");
     background-size: cover;
     background-position: center;
   }
@@ -178,7 +178,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("/images/Homepage/Staff-2025.jpg");
+    background-image: url("/images/home/Staff-2025.jpg");
     background-size: cover;
     background-position: center;
     animation: fade-in-out 20s ease-in-out infinite alternate;

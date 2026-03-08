@@ -6,8 +6,8 @@ const app = express();
 const { injectSpeedInsights } = require("@vercel/speed-insights")
 //Importing all Middleware Files
 const cookieParser = require("cookie-parser");
-const adminAuthRouter = require("./routes/auth.routes.cjs");
-const { requireAdmin } = require("./middleware/requireAdmin.cjs");
+const adminAuthRouter = require("./routes/auth.routes.js");
+const { requireAdmin } = require("./middleware/requireAdmin.js");
 
 const galleries = require("./routes/galleries.routes")
 const pages = require("./routes/public.pages.routes")
@@ -19,7 +19,7 @@ const admin = require("./routes/admin.pages.routes")
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "..", "client", "public")))
 
 // Admin routers
 app.get("/admin/login", (req, res)=> res.sendFile(path.join(__dirname, "views", "pages", "login.html")))

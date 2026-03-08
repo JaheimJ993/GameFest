@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const gallery2024Dir = path.join(__dirname, "..", "public", "images", "2024-gallery");
-const gallery2025Dir = path.join(__dirname, "..", "public", "images", "2025", "GameFest-Day");
+const gallery2024Dir = path.join(__dirname, "..", "public", "images", "2024/gallery");
+const gallery2025Dir = path.join(__dirname, "..", "public", "images", "2025", "gallery");
 
 console.log(gallery2025Dir)
 

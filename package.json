@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon app.js",
-    "tailwind": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch"
+    "tailwind": "npx @tailwindcss/cli -i src/client/public/css/input.css -o src/client/public/css/output.css --watch"
   },
   "author": "Jaheim Joseph",
   "license": "MIT",

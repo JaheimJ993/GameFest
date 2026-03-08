@@ -1,5 +1,3 @@
-const nodemailer = require('nodemailer');
-
 const transporter = require("../config/mail")
 
 const requiredEnvVars = [

@@ -1,10 +1,10 @@
-import supabase from "../config/db.js";
+const supabase = require("../config/db");
 
 /**
  * Helpers
  */
 const normalize = (v) => String(v ?? "").trim();
-const normalizeName = (v) => normalize(v).replace(/\s+/g, " "); // collapse internal whitespace
+const normalizeName = (v) => normalize(v).replace(/\s+/g, " ");
 
 const isValidEmail = (email) => {
   const e = normalize(email);
@@ -283,4 +283,4 @@ const deleteRegistrant = async (req, res) => {
   }
 };
 
-export { submitRegistrants, getRegistrants, updateRegistrantConfirmation, deleteRegistrant };
+module.exports = { submitRegistrants, getRegistrants, updateRegistrantConfirmation, deleteRegistrant };
