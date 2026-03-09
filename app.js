@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // local static serving
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "src", "client", "public")));
 
 // Admin routes
 app.get("/admin/login", (req, res) =>
@@ -39,4 +39,6 @@ app.use(tournaments);
 app.use(registrants);
 app.use(admin);
 
-module.exports = app;
+app.listen(5000, () => {
+  console.log(`app listening on port 5000`);
+});
