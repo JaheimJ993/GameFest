@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cosplayName = document.getElementById("cosplay-name");
   const cosplayEmail = document.getElementById("cosplay-email");
   const cosplayNumber = document.getElementById("cosplay-phone");
-  const cosplayCharacter = document.getElementById("cosplay-character");
-  const cosplayNotes = document.getElementById("cosplay-notes");
+  const cosplayCharacter = document.getElementById("cosplay-inspiration");
+  const cosplayReference = document.getElementById("cosplay-reference");
 
   const successMessage = document.getElementById("message");
   const failMessage = document.getElementById("error-message");
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       Email: cosplayEmail.value.trim(),
       Number: cosplayNumber.value.trim(),
       Character: cosplayCharacter.value.trim(),
-      Notes: cosplayNotes.value.trim(),
+      Reference: cosplayReference.value.trim(),
     };
 
     toggleLoadingState(true);

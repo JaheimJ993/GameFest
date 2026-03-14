@@ -26,18 +26,6 @@ contactSubmit.addEventListener("click", (e) => {
             
             if (response.data.success) {
             
-            setTimeout (() => {
-
-                Successmessage.classList.remove("hidden");
-                // Clear fields regardless
-                firstName.value = ""
-                lastName.value = ""
-                companyName.value = ""
-                email.value = ""
-                number.value = ""
-                about.value = ""
-            }, 1000)
-            
             setTimeout(() => {
                 Successmessage.classList.add("hidden");
 
