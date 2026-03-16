@@ -1,4 +1,5 @@
 const supabase = require("../config/db");
+const { sendTournamentRegistrationReceipt, sendTournamentConfirmedEmail } = require("./mail.controller.js");
 
 /**
  * Helpers
@@ -83,7 +84,7 @@ const submitRegistrants = async (req, res) => {
   try {
     const { data: tournament, error: tourneyErr } = await supabase
       .from("Tournaments")
-      .select("id, team_size")
+      .select("id, team_size, game_name, reg_fee")
       .eq("id", tournamentId)
       .single();
 
@@ -196,7 +197,28 @@ const submitRegistrants = async (req, res) => {
       return res.status(400).json({ message: "error", error });
     }
 
-    return res.json({ message: "success", data });
+    try {
+      console.log("📩 Sending tournament registration receipt to:", email);
+
+      await sendTournamentRegistrationReceipt({
+        email,
+        phone,
+        teamName: teamSize > 1 ? teamName : null,
+        players,
+        tournamentName: tournament.game_name,
+        regFee: tournament.reg_fee,
+      });
+
+      console.log("✅ Tournament registration receipt sent to:", email);
+    } catch (mailErr) {
+      console.error("❌ Failed to send tournament registration receipt:", mailErr);
+    }
+
+    return res.json({
+      message: "success",
+      data,
+      emailSentTo: email,
+    });
   } catch (err) {
     return res.status(500).json({ message: "error", error: err?.message ?? err });
   }
@@ -241,10 +263,28 @@ const updateRegistrantConfirmation = async (req, res) => {
     return res.status(400).json({ message: "error", error: "Missing registrationId" });
   }
 
+  const nextConfirmed = !!reg_confirmed;
+
   try {
+    const { data: existingRegistrant, error: existingError } = await supabase
+      .from("Registrants")
+      .select("registration_id, tournament_id, email, number, team_name, players, reg_confirmed")
+      .eq("registration_id", registrationId)
+      .single();
+
+    if (existingError) {
+      return res.status(400).json({ message: "error", error: existingError });
+    }
+
+    if (!existingRegistrant) {
+      return res.status(404).json({ message: "error", error: "Registrant not found" });
+    }
+
+    const wasConfirmed = !!existingRegistrant.reg_confirmed;
+
     const { data, error } = await supabase
       .from("Registrants")
-      .update({ reg_confirmed: !!reg_confirmed })
+      .update({ reg_confirmed: nextConfirmed })
       .eq("registration_id", registrationId)
       .select()
       .single();
@@ -253,7 +293,54 @@ const updateRegistrantConfirmation = async (req, res) => {
       return res.status(400).json({ message: "error", error });
     }
 
-    return res.json({ message: "success", data });
+    let emailSent = false;
+
+    if (nextConfirmed && !wasConfirmed && existingRegistrant.email) {
+      try {
+        const { data: tournament, error: tournamentError } = await supabase
+          .from("Tournaments")
+          .select("*")
+          .eq("id", existingRegistrant.tournament_id)
+          .single();
+
+        if (tournamentError) {
+          console.error("❌ Failed to load tournament while sending confirmation email:", tournamentError);
+        } else {
+          const fallbackName = Array.isArray(existingRegistrant.players)
+            ? existingRegistrant.players.find(Boolean)
+            : null;
+
+          const recipientName = normalizeName(
+            existingRegistrant.team_name || fallbackName || "Player"
+          );
+
+          console.log("📩 Sending confirmed registration email to:", existingRegistrant.email);
+          console.log("📩 Loaded tournament for email:", tournament);
+
+          await sendTournamentConfirmedEmail({
+            recipientName,
+            email: existingRegistrant.email,
+            tournamentName: tournament?.game_name,
+            registrationDetails: {
+              registrationId: existingRegistrant.registration_id,
+              regConfirmed: true,
+              teamName: existingRegistrant.team_name,
+              phone: existingRegistrant.number,
+              email: existingRegistrant.email,
+              players: Array.isArray(existingRegistrant.players) ? existingRegistrant.players : [],
+            },
+            tournamentDetails: tournament || {},
+          });
+
+          emailSent = true;
+          console.log("✅ Confirmed registration email sent to:", existingRegistrant.email);
+        }
+      } catch (mailErr) {
+        console.error("❌ Failed to send confirmed registration email:", mailErr);
+      }
+    }
+
+    return res.json({ message: "success", data, emailSent });
   } catch (err) {
     return res.status(500).json({ message: "error", error: err?.message ?? err });
   }
