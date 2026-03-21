@@ -1,78 +1,88 @@
-const Name = document.getElementById("Name");
-const email = document.getElementById("Email");
-const subject = document.getElementById("Subject");
-const message = document.getElementById("Message");
+const form = document.getElementById("contact-form");
+const nameInput = document.getElementById("Name");
+const phoneInput = document.getElementById("Phone");
+const emailInput = document.getElementById("Email");
+const subjectInput = document.getElementById("Subject");
+const messageInput = document.getElementById("Message");
 const contactSubmit = document.getElementById("contactSubmit");
-const Successmessage = document.getElementById("message")
-const error = document.getElementById("error-message")
+const contactSpinner = document.getElementById("contactSpinner");
+const contactButtonText = document.getElementById("contactButtonText");
+const successMessage = document.getElementById("message");
+const successMessageText = document.getElementById("message-text");
+const errorMessage = document.getElementById("error-message");
+const errorMessageText = document.getElementById("error-message-text");
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-contactSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
+const showBanner = (element, textNode, text) => {
+  if (textNode && text) textNode.textContent = text;
+  element.classList.remove("hidden");
+  clearTimeout(element.dismissTimer);
+  element.dismissTimer = setTimeout(() => {
+    element.classList.add("hidden");
+  }, 4000);
+};
 
-    const formData = {
-        name: Name.value,
-        email: email.value,
-        subject: subject.value,
-        message: message.value
-    };
-    
-    console.log(formData)
+const hideBanners = () => {
+  successMessage.classList.add("hidden");
+  errorMessage.classList.add("hidden");
+};
 
-    const sendContact = async () => {
-        try {
-            const response = await axios.post("/contactSubmit", formData);
-            console.log("✅ Form submitted");
-            
-            if (response.data.success) {
-            
-            setTimeout (() => {
+const setLoadingState = (isLoading) => {
+  contactSubmit.disabled = isLoading;
+  contactSubmit.classList.toggle("opacity-70", isLoading);
+  contactSubmit.classList.toggle("cursor-not-allowed", isLoading);
+  contactSpinner.classList.toggle("hidden", !isLoading);
+  contactButtonText.textContent = isLoading ? "SENDING..." : "SEND MESSAGE";
+};
 
-                Successmessage.classList.remove("hidden");
-                // Clear fields regardless
-                firstName.value = ""
-                lastName.value = ""
-                companyName.value = ""
-                email.value = ""
-                number.value = ""
-                about.value = ""
-            }, 1000)
-            
-            setTimeout(() => {
-                Successmessage.classList.add("hidden");
+const clearForm = () => {
+  form.reset();
+};
 
-                Name.value = "";
-                email.value = "";
-                subject.value = "";
-                message.value = "";
-            }, 3000)
-        }
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideBanners();
 
-        } catch (err) {
-            console.error("❌ Error submitting form:", err);
+  const formData = {
+    name: nameInput.value.trim(),
+    number: phoneInput.value.trim(),
+    email: emailInput.value.trim(),
+    subject: subjectInput.value.trim(),
+    message: messageInput.value.trim(),
+  };
 
-            //Add the error message into view
-            setTimeout(() => {
-                error.classList.remove("hidden")
-            }, 1000)
+  if (!formData.name || !formData.number || !formData.email || !formData.subject || !formData.message) {
+    showBanner(errorMessage, errorMessageText, "Please fill in all fields before sending.");
+    return;
+  }
 
-            //Remove the error message from view
-            setTimeout(() => {
-                error.classList.add("hidden")
-                Name.value = "";
-                email.value = "";
-                subject.value = "";
-                message.value = "";
-            }, 5000)
-        
-        }
-    };
+  if (!emailPattern.test(formData.email)) {
+    showBanner(errorMessage, errorMessageText, "Please enter a valid email address.");
+    return;
+  }
 
-    sendContact();
+  setLoadingState(true);
 
-    // Clear the form
-    setTimeout(() => {
-        
-    }, 2000)
-    
+  try {
+    const response = await axios.post("/contactSubmit", formData);
+
+    if (response?.data?.success) {
+      clearForm();
+      showBanner(successMessage, successMessageText, response.data.message || "Message sent successfully.");
+      return;
+    }
+
+    showBanner(errorMessage, errorMessageText, response?.data?.message || "We could not send your message right now.");
+  } catch (err) {
+    console.error("❌ Error submitting contact form:", err);
+    const serverMessage =
+      err?.response?.data?.message ||
+      err?.response?.data?.errors?.[0] ||
+      "Something went wrong. Please verify your details and try again.";
+
+    showBanner(errorMessage, errorMessageText, serverMessage);
+  } finally {
+    setLoadingState(false);
+  }
 });
