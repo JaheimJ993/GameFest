@@ -13,7 +13,15 @@ const isValidEmail = (email) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 };
 
-const isValidPhone = (phone) => /^\d{3}-\d{4}$/.test(normalize(phone));
+const normalizePhone = (phone) => {
+  const digits = String(phone ?? "").replace(/\D/g, "");
+
+  if (digits.length !== 7) return null;
+
+  return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+};
+
+const isValidPhone = (phone) => Boolean(normalizePhone(phone));
 
 const uniqueCaseInsensitive = (arr) => {
   const seen = new Set();
@@ -47,7 +55,7 @@ const submitRegistrants = async (req, res) => {
     return res.status(400).json({ message: "error", errors: ["Invalid tournamentId."] });
   }
 
-  const phone = normalize(phoneRaw);
+  const phone = normalizePhone(phoneRaw);
   const email = normalize(emailRaw).toLowerCase();
   const teamName = teamNameRaw === null ? null : normalizeName(teamNameRaw);
 
@@ -57,8 +65,11 @@ const submitRegistrants = async (req, res) => {
 
   const errors = [];
 
-  if (!phone) errors.push("Phone number is required.");
-  else if (!isValidPhone(phone)) errors.push("Phone number must be in the format 444-5555.");
+  if (!normalize(phoneRaw)) {
+    errors.push("Phone number is required.");
+  } else if (!isValidPhone(phoneRaw)) {
+    errors.push("Phone number must be 7 digits, for example 4445555 or 444-5555.");
+  }
 
   if (!email) errors.push("Email address is required.");
   else if (!isValidEmail(email)) errors.push("Please enter a valid email address.");
@@ -123,6 +134,7 @@ const submitRegistrants = async (req, res) => {
     if (emailCheckErr) {
       return res.status(400).json({ message: "error", error: emailCheckErr });
     }
+
     if (existingByEmail?.length) {
       return res.status(409).json({
         message: "error",
@@ -140,6 +152,7 @@ const submitRegistrants = async (req, res) => {
     if (phoneCheckErr) {
       return res.status(400).json({ message: "error", error: phoneCheckErr });
     }
+
     if (existingByPhone?.length) {
       return res.status(409).json({
         message: "error",

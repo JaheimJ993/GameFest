@@ -44,11 +44,11 @@ function initCreateForm() {
           </header>
 
           <form id="teamRegistrationForm" class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md md:p-8" novalidate>
-            <!-- Error / status dropdown -->
+            <!-- Error dropdown -->
             <div id="formErrorDropdown" class="hidden mb-6 overflow-hidden rounded-2xl border border-red-500/25 bg-red-500/10 shadow-2xl">
               <div class="flex items-start justify-between gap-4 px-5 py-4">
                 <div>
-                  <h3 id="formErrorTitle" class="text-sm font-black tracking-[0.12em] text-red-300">PLEASE FIX THE FOLLOWING</h3>
+                  <h3 class="text-sm font-black tracking-[0.12em] text-red-300">PLEASE FIX THE FOLLOWING</h3>
                   <ul id="formErrorList" class="mt-3 list-disc space-y-1 pl-5 text-sm text-white/90"></ul>
                 </div>
                 <button
@@ -94,16 +94,16 @@ function initCreateForm() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  inputmode="tel"
-                  placeholder="e.g., 444-5555"
+                  inputmode="numeric"
+                  placeholder="e.g., 4445555 or 444-5555"
                   autocomplete="tel"
-                  title="Number must be entered as: xxx-xxxx"
+                  title="Enter as 4445555 or 444-5555"
                   required
-                  pattern="\\d{3}-\\d{4}"
+                  pattern="\\d{3}-?\\d{4}"
                   maxlength="8"
                   class="w-full rounded-xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-white/30 focus:ring-2 focus:ring-white/10"
                 />
-                <p class="mt-2 text-xs text-white/50">Format: 444-5555</p>
+                <p class="mt-2 text-xs text-white/50">Accepted: 4445555 or 444-5555</p>
               </div>
 
               <div>
@@ -147,24 +147,12 @@ function initCreateForm() {
     const form = document.getElementById("teamRegistrationForm");
     const closeBtn = document.getElementById("closeFormError");
     const clearBtn = document.getElementById("clearFormBtn");
+    const phoneInput = document.getElementById("phone");
 
     const hideErrors = () => {
       const box = document.getElementById("formErrorDropdown");
+      if (box) box.classList.add("hidden");
       const list = document.getElementById("formErrorList");
-      const title = document.getElementById("formErrorTitle");
-
-      if (box) {
-        box.classList.add("hidden");
-        box.classList.remove("border-green-500/25", "bg-green-500/10");
-        box.classList.add("border-red-500/25", "bg-red-500/10");
-      }
-
-      if (title) {
-        title.textContent = "PLEASE FIX THE FOLLOWING";
-        title.classList.remove("text-green-300");
-        title.classList.add("text-red-300");
-      }
-
       if (list) list.innerHTML = "";
     };
 
@@ -174,6 +162,21 @@ function initCreateForm() {
     if (form) {
       form.addEventListener("input", hideErrors, { passive: true });
       form.addEventListener("change", hideErrors, { passive: true });
+    }
+
+    // Optional UX improvement:
+    // allow only digits and a single dash while typing
+    if (phoneInput) {
+      phoneInput.addEventListener("input", () => {
+        phoneInput.value = phoneInput.value.replace(/[^\d-]/g, "").slice(0, 8);
+      });
+
+      phoneInput.addEventListener("blur", () => {
+        const normalizedPhone = normalizePhone(phoneInput.value);
+        if (normalizedPhone) {
+          phoneInput.value = normalizedPhone;
+        }
+      });
     }
   }
 
@@ -196,78 +199,25 @@ if (document.readyState === "loading") {
   initCreateForm();
 }
 
-// --- validation + UI helpers ---
-const normalize = (s) => String(s ?? "").trim();
-
+// --- validation helpers ---
 const showFormErrors = (errors) => {
   const box = document.getElementById("formErrorDropdown");
   const list = document.getElementById("formErrorList");
-  const title = document.getElementById("formErrorTitle");
-
   if (!box || !list) return;
-
-  box.classList.remove("hidden", "border-green-500/25", "bg-green-500/10");
-  box.classList.add("border-red-500/25", "bg-red-500/10");
-
-  if (title) {
-    title.textContent = "PLEASE FIX THE FOLLOWING";
-    title.classList.remove("text-green-300");
-    title.classList.add("text-red-300");
-  }
 
   list.innerHTML = errors.map((e) => `<li>${e}</li>`).join("");
+  box.classList.remove("hidden");
   box.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-const showFormSuccess = (message) => {
-  const box = document.getElementById("formErrorDropdown");
-  const list = document.getElementById("formErrorList");
-  const title = document.getElementById("formErrorTitle");
+const normalize = (s) => String(s ?? "").trim();
 
-  if (!box || !list) return;
+const normalizePhone = (phone) => {
+  const digits = String(phone ?? "").replace(/\D/g, "");
 
-  box.classList.remove("hidden", "border-red-500/25", "bg-red-500/10");
-  box.classList.add("border-green-500/25", "bg-green-500/10");
+  if (digits.length !== 7) return null;
 
-  if (title) {
-    title.textContent = "SUCCESS";
-    title.classList.remove("text-red-300");
-    title.classList.add("text-green-300");
-  }
-
-  list.innerHTML = `<li class="list-none">${message}</li>`;
-  box.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
-const extractBackendErrors = (err) => {
-  const data = err?.response?.data;
-
-  if (Array.isArray(data?.errors) && data.errors.length) {
-    return data.errors
-      .map((item) => {
-        if (typeof item === "string") return item;
-        if (item?.message) return item.message;
-        return null;
-      })
-      .filter(Boolean);
-  }
-
-  if (data?.error) {
-    if (typeof data.error === "string") return [data.error];
-    if (data.error?.message) return [data.error.message];
-    if (data.error?.details) return [data.error.details];
-    return ["Failed to submit registration."];
-  }
-
-  if (typeof data?.message === "string" && data.message && data.message !== "error") {
-    return [data.message];
-  }
-
-  if (err?.message) {
-    return [err.message];
-  }
-
-  return ["Failed to submit registration. Please try again."];
+  return `${digits.slice(0, 3)}-${digits.slice(3)}`;
 };
 
 const validateRegistrationForm = (form) => {
@@ -297,7 +247,6 @@ const validateRegistrationForm = (form) => {
 
   const seen = new Set();
   const dupes = new Set();
-
   players
     .filter(Boolean)
     .map((p) => p.toLowerCase())
@@ -313,11 +262,14 @@ const validateRegistrationForm = (form) => {
   }
 
   const phoneInput = form.querySelector("#phone");
-  const phone = normalize(phoneInput?.value);
-  const phonePattern = /^\d{3}-\d{4}$/;
+  const phoneRaw = normalize(phoneInput?.value);
+  const phone = normalizePhone(phoneRaw);
 
-  if (!phone) errors.push("Phone number is required.");
-  else if (!phonePattern.test(phone)) errors.push("Phone number must be in the format 444-5555.");
+  if (!phoneRaw) {
+    errors.push("Phone number is required.");
+  } else if (!phone) {
+    errors.push("Phone number must be 7 digits, for example 4445555 or 444-5555.");
+  }
 
   const emailInput = form.querySelector("#email");
   const email = normalize(emailInput?.value);
@@ -332,7 +284,7 @@ const validateRegistrationForm = (form) => {
     errors,
     payload: {
       tournamentId,
-      teamName: teamSize === 1 ? null : teamName || null,
+      teamName: teamSize === 1 ? null : (teamName || null),
       phone,
       email,
       players: players.filter(Boolean),
@@ -348,12 +300,18 @@ document.addEventListener("submit", async (e) => {
 
   const form = e.target;
   const submitBtn = form.querySelector("#submitRegistration");
+  const phoneInput = form.querySelector("#phone");
 
   const { ok, errors, payload } = validateRegistrationForm(form);
 
   if (!ok) {
     showFormErrors(errors);
     return;
+  }
+
+  // Keep field visually consistent with stored value
+  if (phoneInput && payload.phone) {
+    phoneInput.value = payload.phone;
   }
 
   if (submitBtn) {
@@ -364,11 +322,35 @@ document.addEventListener("submit", async (e) => {
 
   try {
     await axios.post("/2026/tournaments/api/register-team", payload);
-    showFormSuccess("Registration submitted successfully.");
+
+    const box = document.getElementById("formErrorDropdown");
+    const list = document.getElementById("formErrorList");
+    if (box && list) {
+      box.classList.remove("border-red-500/25", "bg-red-500/10");
+      box.classList.add("border-green-500/25", "bg-green-500/10");
+
+      const title = box.querySelector("h3");
+      if (title) {
+        title.textContent = "SUCCESS";
+        title.classList.remove("text-red-300");
+        title.classList.add("text-green-300");
+      }
+
+      list.innerHTML = `<li class="list-none">Registration submitted successfully.</li>`;
+      box.classList.remove("hidden");
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     form.reset();
   } catch (err) {
-    console.error("Registration submit error:", err);
-    showFormErrors(extractBackendErrors(err));
+    console.error(err);
+
+    const backendErrors = err?.response?.data?.errors;
+    if (Array.isArray(backendErrors) && backendErrors.length) {
+      showFormErrors(backendErrors);
+    } else {
+      showFormErrors(["Failed to submit registration. Please try again."]);
+    }
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
