@@ -7,6 +7,7 @@ const { deleteTournament } = require("../controllers/tournaments.delete.controll
 
 router.post("/admin/newTournament", newTournament);
 router.get("/api/getTournaments", getTournaments);
+router.get("/admin/api/getTournaments", getTournaments);
 router.get("/2026/api/get-tournament", getTournament);
 router.put("/admin/api/tournaments/:id", updateTournament);
 router.delete("/admin/api/tournaments/:id", deleteTournament);
