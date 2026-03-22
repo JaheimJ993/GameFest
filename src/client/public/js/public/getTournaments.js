@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setLoading(true);
 
     try {
-      const data = await axios.get("/admin/api/getTournaments");
+      const data = await axios.get("/api/getTournaments");
       const tournaments = data.data?.data ?? [];
 
       tournamentContainer.innerHTML = "";

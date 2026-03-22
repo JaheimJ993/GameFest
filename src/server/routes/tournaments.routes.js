@@ -6,7 +6,7 @@ const { newTournament, getTournaments, getTournament, updateTournament } = requi
 const { deleteTournament } = require("../controllers/tournaments.delete.controller");
 
 router.post("/admin/newTournament", newTournament);
-router.get("/admin/api/getTournaments", getTournaments);
+router.get("/api/getTournaments", getTournaments);
 router.get("/2026/api/get-tournament", getTournament);
 router.put("/admin/api/tournaments/:id", updateTournament);
 router.delete("/admin/api/tournaments/:id", deleteTournament);
