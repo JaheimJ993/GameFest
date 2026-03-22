@@ -27,7 +27,8 @@ const logMailResult = (label, info) => {
 
 const normalizeText = (value) => String(value ?? "").trim();
 
-const isValidEmailAddress = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeText(value));
+const isValidEmailAddress = (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizeText(value));
 
 const isValidPhoneValue = (value) => {
   const digits = normalizeText(value).replace(/\D/g, "");
@@ -39,7 +40,7 @@ const escapeHtml = (value) => {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
+    .replace(/\"/g, "&quot;")
     .replace(/'/g, "&#39;");
 };
 
@@ -56,14 +57,19 @@ const formatMoney = (value) => {
 const renderButton = (label, href) => {
   if (!href) return "";
   return `
-    <a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:12px 18px; border-radius:999px; background:#f2dd67; color:#111111; text-decoration:none; font-family:Segoe UI, Arial, sans-serif; font-size:13px; line-height:16px; font-weight:800; letter-spacing:0.4px;">
+    <a href="${escapeHtml(
+      href
+    )}" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:12px 18px; border-radius:999px; background:#f2dd67; color:#111111; text-decoration:none; font-family:Segoe UI, Arial, sans-serif; font-size:13px; line-height:16px; font-weight:800; letter-spacing:0.4px;">
       ${escapeHtml(label)}
     </a>
   `;
 };
 
 const renderDetailRowsHtml = (rows = []) => {
-  const filtered = rows.filter((row) => row && row.value !== null && row.value !== undefined && row.value !== "");
+  const filtered = rows.filter(
+    (row) =>
+      row && row.value !== null && row.value !== undefined && row.value !== ""
+  );
 
   if (!filtered.length) {
     return `
@@ -75,14 +81,17 @@ const renderDetailRowsHtml = (rows = []) => {
     `;
   }
 
-  return filtered.map((row) => {
-    const label = escapeHtml(row.label);
-    const value = escapeHtml(row.value);
-    const valueHtml = row.href
-      ? `<a href="${escapeHtml(row.href)}" style="color:#f2dd67; text-decoration:none; font-weight:800;">${value}</a>`
-      : value;
+  return filtered
+    .map((row) => {
+      const label = escapeHtml(row.label);
+      const value = escapeHtml(row.value);
+      const valueHtml = row.href
+        ? `<a href="${escapeHtml(
+            row.href
+          )}" style="color:#f2dd67; text-decoration:none; font-weight:800;">${value}</a>`
+        : value;
 
-    return `
+      return `
       <tr>
         <td style="padding:0 12px 12px 0; width:38%; vertical-align:top; font-family:Segoe UI, Arial, sans-serif; font-size:11px; line-height:18px; color:#8f94a3; letter-spacing:1.2px; text-transform:uppercase; font-weight:700;">
           ${label}
@@ -92,13 +101,18 @@ const renderDetailRowsHtml = (rows = []) => {
         </td>
       </tr>
     `;
-  }).join("");
+    })
+    .join("");
 };
 
-const buildDetailRowsText = (rows = []) => rows
-  .filter((row) => row && row.value !== null && row.value !== undefined && row.value !== "")
-  .map((row) => `${row.label}: ${row.value}`)
-  .join("\n");
+const buildDetailRowsText = (rows = []) =>
+  rows
+    .filter(
+      (row) =>
+        row && row.value !== null && row.value !== undefined && row.value !== ""
+    )
+    .map((row) => `${row.label}: ${row.value}`)
+    .join("\n");
 
 const renderSection = ({ title, bodyHtml }) => `
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:18px; background:#1a1d25; border:1px solid rgba(255,255,255,0.07); border-radius:18px; overflow:hidden;">
@@ -114,37 +128,51 @@ const renderSection = ({ title, bodyHtml }) => `
   </table>
 `;
 
-const renderRowsSection = (title, rows = []) => renderSection({
-  title,
-  bodyHtml: `
+const renderRowsSection = (title, rows = []) =>
+  renderSection({
+    title,
+    bodyHtml: `
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
       ${renderDetailRowsHtml(rows)}
     </table>
   `,
-});
+  });
 
-const renderTextSection = (title, text) => renderSection({
-  title,
-  bodyHtml: `
+const renderTextSection = (title, text) =>
+  renderSection({
+    title,
+    bodyHtml: `
     <div style="font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:25px; color:#e8e9ee; white-space:pre-line; word-break:break-word;">
       ${escapeHtml(text)}
     </div>
   `,
-});
+  });
 
-const renderHtmlSection = (title, html) => renderSection({
+const renderHtmlSection = (title, html) =>
+  renderSection({
+    title,
+    bodyHtml: html,
+  });
+
+const renderListSection = (
   title,
-  bodyHtml: html,
-});
-
-const renderListSection = (title, items = [], emptyText = "No items provided.") => {
+  items = [],
+  emptyText = "No items provided."
+) => {
   const filtered = items.filter(Boolean);
   return renderSection({
     title,
     bodyHtml: filtered.length
       ? `
         <ul style="margin:0; padding-left:20px; font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:24px; color:#ffffff;">
-          ${filtered.map((item, index) => `<li style="margin:0 0 8px;">${index + 1}. ${escapeHtml(item)}</li>`).join("")}
+          ${filtered
+            .map(
+              (item, index) =>
+                `<li style="margin:0 0 8px;">${index + 1}. ${escapeHtml(
+                  item
+                )}</li>`
+            )
+            .join("")}
         </ul>
       `
       : `
@@ -246,11 +274,12 @@ const formatDisplayValue = (value) => {
   return trimmed;
 };
 
-const toTitleCase = (value) => String(value ?? "")
-  .replace(/_/g, " ")
-  .replace(/\s+/g, " ")
-  .trim()
-  .replace(/\b\w/g, (char) => char.toUpperCase());
+const toTitleCase = (value) =>
+  String(value ?? "")
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
 const getPrizeLabel = (key) => {
   const normalizedKey = String(key ?? "").toLowerCase();
@@ -316,7 +345,13 @@ const getPrizeEntries = (tournamentDetails = {}) => {
   }
 
   return Object.entries(tournamentDetails)
-    .filter(([key, value]) => /prize/i.test(key) && value !== null && value !== undefined && value !== "")
+    .filter(
+      ([key, value]) =>
+        /prize/i.test(key) &&
+        value !== null &&
+        value !== undefined &&
+        value !== ""
+    )
     .filter(([, value]) => typeof value !== "object")
     .map(([key, value]) => ({
       key,
@@ -329,6 +364,17 @@ const getPrizeEntries = (tournamentDetails = {}) => {
       if (a.weight !== b.weight) return a.weight - b.weight;
       return a.label.localeCompare(b.label);
     });
+};
+
+const getGameFestArchiveBcc = (email) => {
+  const archiveEmail = normalizeText(process.env.MAIL_TO).toLowerCase();
+  const customerEmail = normalizeText(email).toLowerCase();
+
+  if (!archiveEmail || archiveEmail === customerEmail) {
+    return undefined;
+  }
+
+  return archiveEmail;
 };
 
 const contactSection = async (name, email, phone, subject, message) => {
@@ -392,9 +438,11 @@ const contact = async (req, res) => {
 
     if (!name) errors.push("Name is required.");
     if (!phone) errors.push("Phone number is required.");
-    else if (!isValidPhoneValue(phone)) errors.push("Please enter a valid phone number.");
+    else if (!isValidPhoneValue(phone))
+      errors.push("Please enter a valid phone number.");
     if (!email) errors.push("Email is required.");
-    else if (!isValidEmailAddress(email)) errors.push("Please enter a valid email address.");
+    else if (!isValidEmailAddress(email))
+      errors.push("Please enter a valid email address.");
     if (!subject) errors.push("Subject is required.");
     if (!message) errors.push("Message is required.");
 
@@ -421,8 +469,18 @@ const contact = async (req, res) => {
   }
 };
 
-const sponsorSection = async (firstName, lastName, companyName, email, number, about) => {
-  const fullName = [normalizeText(firstName), normalizeText(lastName)].filter(Boolean).join(" ").trim();
+const sponsorSection = async (
+  firstName,
+  lastName,
+  companyName,
+  email,
+  number,
+  about
+) => {
+  const fullName = [normalizeText(firstName), normalizeText(lastName)]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
 
   const text = `
 New Vendor Submission - GameFest
@@ -564,15 +622,20 @@ Reference Image: ${Reference}
           { label: "Contact Number", value: Number, href: `tel:${Number}` },
           { label: "Character", value: Character },
         ]),
-        renderHtmlSection("Reference Image", `
+        renderHtmlSection(
+          "Reference Image",
+          `
           <div style="font-family:Segoe UI, Arial, sans-serif; font-size:14px; line-height:22px; color:#c9cbd3; margin-bottom:14px;">
             Review the attached reference image using the preview below or open the original file.
           </div>
           <div style="margin-bottom:16px;">
             ${renderButton("Open Full Reference", Reference)}
           </div>
-          <img src="${escapeHtml(Reference)}" alt="${escapeHtml(Character)} reference" style="display:block; width:100%; max-width:520px; height:auto; border-radius:14px; border:1px solid rgba(255,255,255,0.08);" />
-        `),
+          <img src="${escapeHtml(Reference)}" alt="${escapeHtml(
+            Character
+          )} reference" style="display:block; width:100%; max-width:520px; height:auto; border-radius:14px; border:1px solid rgba(255,255,255,0.08);" />
+        `
+        ),
       ].join(""),
       footerText: "Sent via the GameFest cosplay signup form.",
     });
@@ -611,13 +674,15 @@ const sendTournamentRegistrationReceipt = async ({
   tournamentName,
   regFee,
 }) => {
+  const safeEmail = normalizeText(email).toLowerCase();
+  const safeTournamentName = normalizeText(tournamentName) || "Tournament";
   const safePlayers = Array.isArray(players) ? players.filter(Boolean) : [];
   const receiptRows = [
-    { label: "Game", value: tournamentName },
+    { label: "Game", value: safeTournamentName },
     { label: "Registration Fee", value: formatMoney(regFee) },
     ...(teamName ? [{ label: "Team Name", value: teamName }] : []),
     { label: "Phone", value: phone },
-    { label: "Email", value: email },
+    { label: "Email", value: safeEmail },
   ];
 
   const playersText = safePlayers.length
@@ -627,7 +692,8 @@ const sendTournamentRegistrationReceipt = async ({
   const text = `
 GameFest Tournament Registration Received
 
-We have received your registration submission for ${tournamentName}.
+We have received your registration submission for ${safeTournamentName}.
+The email address used for this registration is ${safeEmail}.
 
 Registration Details
 ${buildDetailRowsText(receiptRows)}
@@ -637,6 +703,8 @@ ${playersText}
 
 Payment Instructions
 You can make payment via any of Zoon's locations or MMG.
+If paying with MMG, go to Pay Merchants, search for "Game Fest", or enter the merchant code m817871.
+In the message section, include the email address used to register: ${safeEmail}, and the game registered for: ${safeTournamentName}.
 
 You are halfway to being officially signed up.
 Once payment is completed and your registration is verified, your sign-up can be confirmed.
@@ -645,36 +713,59 @@ GameFest Guyana
   `.trim();
 
   const html = buildEmailLayout({
-    preheader: `Registration received for ${tournamentName}`,
+    preheader: `Registration received for ${safeTournamentName}`,
     badge: "Registration Received",
     title: "Registration Received",
     subtitle: "Tournament registration submitted",
     introHtml: `
       <p style="margin:12px 0 0; font-family:Segoe UI, Arial, sans-serif; font-size:14px; line-height:22px; color:#c9cbd3;">
-        We have received your registration for <span style="color:#f2dd67; font-weight:800;">${escapeHtml(tournamentName)}</span>. You are halfway to being officially signed up.
+        We have received your registration for <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+          safeTournamentName
+        )}</span>
+        using the email <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+          safeEmail
+        )}</span>. You are halfway to being officially signed up.
       </p>
     `,
     sectionsHtml: [
       renderRowsSection("Registration Details", receiptRows),
       renderListSection("Players", safePlayers, "No player names were attached."),
-      renderHtmlSection("Payment Instructions", `
+      renderHtmlSection(
+        "Payment Instructions",
+        `
         <div style="font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:25px; color:#e8e9ee;">
-          You can make payment via <span style="color:#f2dd67; font-weight:800;">any of Zoon's locations</span> or <span style="color:#f2dd67; font-weight:800;">MMG</span>.
+          You can make payment via <span style="color:#f2dd67; font-weight:800;">any of Zoon's locations</span> or <span style="color:#f2dd67; font-weight:800;">MMG</span>.<br /><br />
+          If paying with <span style="color:#f2dd67; font-weight:800;">MMG</span>, go to <span style="color:#f2dd67; font-weight:800;">Pay Merchants</span>, search for <span style="color:#f2dd67; font-weight:800;">&quot;Game Fest&quot;</span>, or enter the merchant code <span style="color:#f2dd67; font-weight:800;">m817871</span>.<br /><br />
+          In the <span style="color:#f2dd67; font-weight:800;">message section</span>, include the email address used to register:
+          <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+            safeEmail
+          )}</span>, and the game registered for:
+          <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+            safeTournamentName
+          )}</span>.
         </div>
-      `),
-      renderHtmlSection("Next Step", `
+      `
+      ),
+      renderHtmlSection(
+        "Next Step",
+        `
         <div style="font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:25px; color:#e8e9ee;">
           Once payment is completed and your registration is verified, your sign-up can be confirmed.
         </div>
-      `),
+      `
+      ),
     ].join(""),
-    footerText: "Sent automatically after your GameFest tournament registration was received.",
+    footerText:
+      "Sent automatically after your GameFest tournament registration was received.",
   });
+
+  const archiveBcc = getGameFestArchiveBcc(safeEmail);
 
   const info = await transporter.sendMail({
     from: MAIL_FROM,
-    to: email,
-    subject: `Registration Received | ${tournamentName}`,
+    to: safeEmail,
+    ...(archiveBcc ? { bcc: archiveBcc } : {}),
+    subject: `Registration Received | ${safeTournamentName}`,
     text,
     html,
   });
@@ -691,7 +782,12 @@ const sendTournamentConfirmedEmail = async ({
   tournamentDetails = {},
 }) => {
   const resolvedName = recipientName || "Player";
-  const resolvedTournament = tournamentName || tournamentDetails?.game_name || "Tournament";
+  const resolvedEmail = normalizeText(
+    registrationDetails.email || email
+  ).toLowerCase();
+  const resolvedTournament =
+    normalizeText(tournamentName || tournamentDetails?.game_name) ||
+    "Tournament";
   const players = Array.isArray(registrationDetails.players)
     ? registrationDetails.players.filter(Boolean)
     : [];
@@ -702,17 +798,25 @@ const sendTournamentConfirmedEmail = async ({
     { label: "Status", value: registrationDetails.regConfirmed ? "Confirmed" : null },
     { label: "Team Name", value: registrationDetails.teamName || null },
     { label: "Phone", value: registrationDetails.phone || null },
-    { label: "Email", value: registrationDetails.email || email || null },
+    { label: "Email", value: resolvedEmail || null },
   ].filter((row) => row.value);
 
   const gameRows = [
-    { label: "Game", value: tournamentDetails.game_name || tournamentName || null },
-    { label: "Team Size", value: tournamentDetails.team_size ? String(tournamentDetails.team_size) : null },
+    { label: "Game", value: tournamentDetails.game_name || resolvedTournament || null },
+    {
+      label: "Team Size",
+      value: tournamentDetails.team_size
+        ? String(tournamentDetails.team_size)
+        : null,
+    },
     {
       label: "Registration Fee",
-      value: tournamentDetails.reg_fee !== null && tournamentDetails.reg_fee !== undefined && tournamentDetails.reg_fee !== ""
-        ? formatMoney(tournamentDetails.reg_fee)
-        : null,
+      value:
+        tournamentDetails.reg_fee !== null &&
+        tournamentDetails.reg_fee !== undefined &&
+        tournamentDetails.reg_fee !== ""
+          ? formatMoney(tournamentDetails.reg_fee)
+          : null,
     },
   ].filter((row) => row.value);
 
@@ -727,7 +831,9 @@ const sendTournamentConfirmedEmail = async ({
 
   const registrationText = buildDetailRowsText(registrationRows);
   const gameDetailsText = buildDetailRowsText(gameRows);
-  const prizeText = prizeRows.length ? buildDetailRowsText(prizeRows) : "Prize details will be shared separately.";
+  const prizeText = prizeRows.length
+    ? buildDetailRowsText(prizeRows)
+    : "Prize details will be shared separately.";
 
   const text = `
 Registration Confirmed!
@@ -735,6 +841,7 @@ Registration Confirmed!
 Hi ${resolvedName},
 
 Your registration for ${resolvedTournament} has been confirmed for GameFest 2026.
+The email address used for this registration is ${resolvedEmail}.
 
 Registration Details
 ${registrationText}
@@ -753,9 +860,12 @@ We look forward to seeing you at the event. Keep an eye on your email and GameFe
 GameFest Guyana
   `.trim();
 
-  console.log("📩 Sending tournament confirmation email to:", email);
+  console.log("📩 Sending tournament confirmation email to:", resolvedEmail);
   console.log("📩 Tournament details passed to email:", tournamentDetails);
-  console.log("📩 Registration details passed to email:", registrationDetails);
+  console.log(
+    "📩 Registration details passed to email:",
+    registrationDetails
+  );
 
   const html = buildEmailLayout({
     preheader: `Registration confirmed for ${resolvedName} in ${resolvedTournament}`,
@@ -764,8 +874,15 @@ GameFest Guyana
     subtitle: `${escapeHtml(resolvedTournament)} is now locked in`,
     introHtml: `
       <p style="margin:12px 0 0; font-family:Segoe UI, Arial, sans-serif; font-size:14px; line-height:22px; color:#c9cbd3;">
-        Hi <span style="color:#f2dd67; font-weight:800;">${escapeHtml(resolvedName)}</span>, your registration for
-        <span style="color:#f2dd67; font-weight:800;">${escapeHtml(resolvedTournament)}</span> has been officially confirmed for GameFest 2026.
+        Hi <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+          resolvedName
+        )}</span>, your registration for
+        <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+          resolvedTournament
+        )}</span> using
+        <span style="color:#f2dd67; font-weight:800;">${escapeHtml(
+          resolvedEmail
+        )}</span> has been officially confirmed for GameFest 2026.
       </p>
     `,
     sectionsHtml: [
@@ -774,23 +891,33 @@ GameFest Guyana
       renderRowsSection("Game Details", gameRows),
       prizeRows.length
         ? renderRowsSection("Prize Money", prizeRows)
-        : renderHtmlSection("Prize Money", `
+        : renderHtmlSection(
+            "Prize Money",
+            `
             <div style="font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:25px; color:#e8e9ee;">
               Prize details will be shared separately.
             </div>
-          `),
-      renderHtmlSection("Event Note", `
+          `
+          ),
+      renderHtmlSection(
+        "Event Note",
+        `
         <div style="font-family:Segoe UI, Arial, sans-serif; font-size:15px; line-height:25px; color:#e8e9ee;">
           We look forward to seeing you at the event. Keep an eye on your email and GameFest's official channels for tournament updates, schedules, and any additional instructions.
         </div>
-      `),
+      `
+      ),
     ].join(""),
-    footerText: "Sent automatically after your GameFest tournament registration was confirmed.",
+    footerText:
+      "Sent automatically after your GameFest tournament registration was confirmed.",
   });
+
+  const archiveBcc = getGameFestArchiveBcc(resolvedEmail);
 
   const info = await transporter.sendMail({
     from: MAIL_FROM,
-    to: email,
+    to: resolvedEmail,
+    ...(archiveBcc ? { bcc: archiveBcc } : {}),
     subject: `Registration Confirmed! | ${resolvedTournament}`,
     text,
     html,

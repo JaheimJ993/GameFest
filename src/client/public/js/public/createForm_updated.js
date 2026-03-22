@@ -44,15 +44,18 @@ function initCreateForm() {
           </header>
 
           <form id="teamRegistrationForm" class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md md:p-8" novalidate>
-            <!-- Error dropdown -->
+            <!-- Error / status dropdown -->
             <div id="formErrorDropdown" class="hidden mb-6 overflow-hidden rounded-2xl border border-red-500/25 bg-red-500/10 shadow-2xl">
               <div class="flex items-start justify-between gap-4 px-5 py-4">
                 <div>
-                  <h3 class="text-sm font-black tracking-[0.12em] text-red-300">PLEASE FIX THE FOLLOWING</h3>
+                  <h3 id="formErrorTitle" class="text-sm font-black tracking-[0.12em] text-red-300">PLEASE FIX THE FOLLOWING</h3>
                   <ul id="formErrorList" class="mt-3 list-disc space-y-1 pl-5 text-sm text-white/90"></ul>
                 </div>
-                <button type="button" id="closeFormError"
-                  class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/80 transition hover:bg-white/10 hover:text-white">
+                <button
+                  type="button"
+                  id="closeFormError"
+                  class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/80 transition hover:bg-white/10 hover:text-white"
+                >
                   Close
                 </button>
               </div>
@@ -96,7 +99,7 @@ function initCreateForm() {
                   autocomplete="tel"
                   title="Number must be entered as: xxx-xxxx"
                   required
-                  pattern="\d{3}-\d{4}"
+                  pattern="\\d{3}-\\d{4}"
                   maxlength="8"
                   class="w-full rounded-xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-white placeholder:text-white/40 outline-none transition focus:border-white/30 focus:ring-2 focus:ring-white/10"
                 />
@@ -141,15 +144,27 @@ function initCreateForm() {
       </section>
     `;
 
-    // Wire close button + hide-on-edit behavior
     const form = document.getElementById("teamRegistrationForm");
     const closeBtn = document.getElementById("closeFormError");
     const clearBtn = document.getElementById("clearFormBtn");
 
     const hideErrors = () => {
       const box = document.getElementById("formErrorDropdown");
-      if (box) box.classList.add("hidden");
       const list = document.getElementById("formErrorList");
+      const title = document.getElementById("formErrorTitle");
+
+      if (box) {
+        box.classList.add("hidden");
+        box.classList.remove("border-green-500/25", "bg-green-500/10");
+        box.classList.add("border-red-500/25", "bg-red-500/10");
+      }
+
+      if (title) {
+        title.textContent = "PLEASE FIX THE FOLLOWING";
+        title.classList.remove("text-green-300");
+        title.classList.add("text-red-300");
+      }
+
       if (list) list.innerHTML = "";
     };
 
@@ -162,18 +177,15 @@ function initCreateForm() {
     }
   }
 
-  // 1) Preferred: event from loadTournaments_updated.js
   window.addEventListener("tournament:ready", (e) => {
     createForm(e?.detail?.teamSize);
   });
 
-  // 2) Fallback: read global if the event already fired before this script loaded
   if (window.__TOURNAMENT__?.teamSize) {
     createForm(window.__TOURNAMENT__.teamSize);
     return;
   }
 
-  // 3) Fallback: read from DOM if already rendered
   const teamSizeEl = document.getElementById("team-size");
   if (teamSizeEl) createForm(teamSizeEl.dataset.teamSize);
 }
@@ -184,18 +196,79 @@ if (document.readyState === "loading") {
   initCreateForm();
 }
 
-// --- validation helpers ---
+// --- validation + UI helpers ---
+const normalize = (s) => String(s ?? "").trim();
+
 const showFormErrors = (errors) => {
   const box = document.getElementById("formErrorDropdown");
   const list = document.getElementById("formErrorList");
+  const title = document.getElementById("formErrorTitle");
+
   if (!box || !list) return;
 
+  box.classList.remove("hidden", "border-green-500/25", "bg-green-500/10");
+  box.classList.add("border-red-500/25", "bg-red-500/10");
+
+  if (title) {
+    title.textContent = "PLEASE FIX THE FOLLOWING";
+    title.classList.remove("text-green-300");
+    title.classList.add("text-red-300");
+  }
+
   list.innerHTML = errors.map((e) => `<li>${e}</li>`).join("");
-  box.classList.remove("hidden");
   box.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-const normalize = (s) => String(s ?? "").trim();
+const showFormSuccess = (message) => {
+  const box = document.getElementById("formErrorDropdown");
+  const list = document.getElementById("formErrorList");
+  const title = document.getElementById("formErrorTitle");
+
+  if (!box || !list) return;
+
+  box.classList.remove("hidden", "border-red-500/25", "bg-red-500/10");
+  box.classList.add("border-green-500/25", "bg-green-500/10");
+
+  if (title) {
+    title.textContent = "SUCCESS";
+    title.classList.remove("text-red-300");
+    title.classList.add("text-green-300");
+  }
+
+  list.innerHTML = `<li class="list-none">${message}</li>`;
+  box.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+const extractBackendErrors = (err) => {
+  const data = err?.response?.data;
+
+  if (Array.isArray(data?.errors) && data.errors.length) {
+    return data.errors
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item?.message) return item.message;
+        return null;
+      })
+      .filter(Boolean);
+  }
+
+  if (data?.error) {
+    if (typeof data.error === "string") return [data.error];
+    if (data.error?.message) return [data.error.message];
+    if (data.error?.details) return [data.error.details];
+    return ["Failed to submit registration."];
+  }
+
+  if (typeof data?.message === "string" && data.message && data.message !== "error") {
+    return [data.message];
+  }
+
+  if (err?.message) {
+    return [err.message];
+  }
+
+  return ["Failed to submit registration. Please try again."];
+};
 
 const validateRegistrationForm = (form) => {
   const errors = [];
@@ -224,6 +297,7 @@ const validateRegistrationForm = (form) => {
 
   const seen = new Set();
   const dupes = new Set();
+
   players
     .filter(Boolean)
     .map((p) => p.toLowerCase())
@@ -231,6 +305,7 @@ const validateRegistrationForm = (form) => {
       if (seen.has(p)) dupes.add(p);
       seen.add(p);
     });
+
   if (dupes.size) errors.push("Player names must be unique (no duplicates).");
 
   if (teamSize && players.filter(Boolean).length !== Number(teamSize)) {
@@ -240,11 +315,13 @@ const validateRegistrationForm = (form) => {
   const phoneInput = form.querySelector("#phone");
   const phone = normalize(phoneInput?.value);
   const phonePattern = /^\d{3}-\d{4}$/;
+
   if (!phone) errors.push("Phone number is required.");
   else if (!phonePattern.test(phone)) errors.push("Phone number must be in the format 444-5555.");
 
   const emailInput = form.querySelector("#email");
   const email = normalize(emailInput?.value);
+
   if (!email) errors.push("Email address is required.");
   else if (emailInput && !emailInput.checkValidity()) errors.push("Please enter a valid email address.");
 
@@ -255,7 +332,7 @@ const validateRegistrationForm = (form) => {
     errors,
     payload: {
       tournamentId,
-      teamName: teamSize === 1 ? null : (teamName || null),
+      teamName: teamSize === 1 ? null : teamName || null,
       phone,
       email,
       players: players.filter(Boolean),
@@ -287,28 +364,11 @@ document.addEventListener("submit", async (e) => {
 
   try {
     await axios.post("/2026/tournaments/api/register-team", payload);
-
-    // success message using same dropdown
-    const box = document.getElementById("formErrorDropdown");
-    const list = document.getElementById("formErrorList");
-    if (box && list) {
-      box.classList.remove("border-red-500/25", "bg-red-500/10");
-      box.classList.add("border-green-500/25", "bg-green-500/10");
-      const title = box.querySelector("h3");
-      if (title) {
-        title.textContent = "SUCCESS";
-        title.classList.remove("text-red-300");
-        title.classList.add("text-green-300");
-      }
-      list.innerHTML = `<li class="list-none">Registration submitted successfully.</li>`;
-      box.classList.remove("hidden");
-      box.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
+    showFormSuccess("Registration submitted successfully.");
     form.reset();
   } catch (err) {
-    console.error(err);
-    showFormErrors(["Failed to submit registration. Please try again."]);
+    console.error("Registration submit error:", err);
+    showFormErrors(extractBackendErrors(err));
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
