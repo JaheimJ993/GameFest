@@ -188,65 +188,67 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const exportConfirmedRegistrants = async () => {
-    if (!exportConfirmedBtn) return;
+  if (!exportConfirmedBtn) return;
 
-    if (typeof XLSX === "undefined") {
-      window.alert("Excel export library failed to load.");
+  if (typeof XLSX === "undefined") {
+    window.alert("Excel export library failed to load.");
+    return;
+  }
+
+  const defaultLabel = exportConfirmedBtn.textContent;
+  exportConfirmedBtn.disabled = true;
+  exportConfirmedBtn.textContent = "EXPORTING...";
+
+  try {
+    const res = await axios.get("/TMS/tournaments/api/registrants", {
+      params: {
+        id,
+      },
+    });
+
+    const registrants = Array.isArray(res.data?.data) ? res.data.data : [];
+
+    if (!registrants.length) {
+      window.alert("There are no registrants to export for this tournament yet.");
       return;
     }
 
-    const defaultLabel = exportConfirmedBtn.textContent;
-    exportConfirmedBtn.disabled = true;
-    exportConfirmedBtn.textContent = "EXPORTING...";
+    const rows = buildExportRows(registrants);
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
 
-    try {
-      const res = await axios.get("/TMS/tournaments/api/registrants", {
-        params: {
-          id,
-          confirmed: true,
-        },
-      });
+    worksheet["!cols"] = [
+      { wch: 6 },
+      { wch: 14 },
+      { wch: 28 },
+      { wch: 18 },
+      { wch: 20 },
+      { wch: 12 },
+      { wch: 22 },
+      { wch: 22 },
+      { wch: 16 },
+      { wch: 24 },
+      { wch: 42 },
+      { wch: 18 },
+      { wch: 30 },
+      { wch: 12 },
+    ];
 
-      const confirmedRegistrants = Array.isArray(res.data?.data) ? res.data.data : [];
+    XLSX.utils.book_append_sheet(workbook, worksheet, "All Registrants");
 
-      if (!confirmedRegistrants.length) {
-        window.alert("There are no confirmed records to export for this tournament yet.");
-        return;
-      }
+    const fileName = `${sanitizeFileName(
+      currentTournament?.game_name || `tournament-${id}`
+    )}-all-registrants.xlsx`;
 
-      const rows = buildExportRows(confirmedRegistrants);
-      const worksheet = XLSX.utils.json_to_sheet(rows);
-      const workbook = XLSX.utils.book_new();
-
-      worksheet["!cols"] = [
-        { wch: 6 },
-        { wch: 14 },
-        { wch: 28 },
-        { wch: 18 },
-        { wch: 20 },
-        { wch: 12 },
-        { wch: 22 },
-        { wch: 22 },
-        { wch: 16 },
-        { wch: 24 },
-        { wch: 42 },
-        { wch: 18 },
-        { wch: 30 },
-        { wch: 12 },
-      ];
-
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Confirmed Registrants");
-
-      const fileName = `${sanitizeFileName(currentTournament?.game_name || `tournament-${id}`)}-confirmed-registrants.xlsx`;
-      XLSX.writeFile(workbook, fileName);
-    } catch (err) {
-      console.error(err);
-      window.alert("Unable to export confirmed records right now.");
-    } finally {
-      exportConfirmedBtn.disabled = false;
-      exportConfirmedBtn.textContent = defaultLabel;
-    }
-  };
+    XLSX.writeFile(workbook, fileName);
+  } catch (err) {
+    console.error(err);
+    window.alert("Unable to export registrant records right now.");
+  } finally {
+    exportConfirmedBtn.disabled = false;
+    exportConfirmedBtn.textContent = defaultLabel;
+  }
+};
 
   const renderTournamentInfo = (tournament) => {
     currentTournament = tournament ?? null;
