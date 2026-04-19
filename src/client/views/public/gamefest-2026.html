@@ -50,7 +50,7 @@
                     href="/#merch">GAMESTORE</a>
                 <!-- Sponsor -->
                 <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
-                    href="/sponsor">PARTNER</a>
+                    href="/sponsor">BECOME A VENDOR</a>
                 <!-- About -->
                 <a class="mx-2 text-[14px] font-semibold tracking-[2px] duration-200 ease-in-out hover:border-b-[1px]"
                     href="/about">ABOUT US</a>
@@ -104,7 +104,7 @@
                 class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">MERCH</a>
             <!-- Sponsor -->
             <a href="/Sponsor"
-                class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">PARTNER</a>
+                class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">BECOME A VENDOR</a>
             <!--About -->
             <a href="/about"
                 class="w-content py-5 text-center text-2xl font-medium tracking-[5px] duration-200 hover:brightness-75">ABOUT</a>
@@ -349,6 +349,75 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <hr class="w-[85%] border-2 border-white/15 mx-auto">
+
+    <!-- Sponsor Hero -->
+    <section id="sponsorCopy" class="mt-8 relative h-fit w-full content-center text-white max-md:h-[700px] md:h-[600px]">
+        <!-- Background Image for this section -->
+        <img src="/images/2025/gallery/_M3A7082-Enhanced-NR.webp"
+        class="absolute inset-0 -z-10 object-cover brightness-[60%] max-md:h-[700px] md:h-[600px] md:w-full" />
+        <!-- Text -->
+        <div
+        class="h-fit w-[55%] bg-gradient2/80 text-center max-md:m-auto max-md:w-full max-md:max-w-[500px] max-md:rounded-2xl max-md:py-[200px] md:h-[600px] md:content-center md:bg-gradient2/90">
+        <p class="mb-3 text-2xl tracking-[3px] lg:text-3xl">JOIN THE</p>
+        <h1 class="text-6xl font-extrabold tracking-[6px] text-gamefest lg:text-7xl">MOVEMENT</h1>
+        </div>
+    </section>
+
+    <!-- Sponsor Segment -->
+    <section class="h-fit w-full bg-gradient2 py-6 text-center text-white">
+
+        <!-- Sponsor Form -->
+        <h1 class="p-3 text-lg">Interested? Fill out the form and our team will be in contact as soon as possible!</h1>
+
+        <!--Sponsor Form -->
+        <form id="Sponsor-form" class="mx-auto flex max-w-[1200px] flex-row flex-wrap justify-around">
+            <!-- Personal Information -->
+            <div class="mx-auto my-4 w-[90%] max-w-[500px] rounded-[10px] border-[3px] border-white/15 bg-white/5 p-3">
+                <label for="fName" class="text-xl font-medium tracking-[1px]">FIRST NAME</label>
+                <input id="fName"
+                    class="mx-auto my-[10px] block w-[80%] rounded-[5px] border-2 border-white/10 bg-white/10 p-2"
+                    type="text" required placeholder="John" />
+
+                <label for="lName" class="sponsor-label">LAST NAME</label>
+                <input id="lName" class="sponsor-input" type="text" required placeholder="Doe" />
+
+                <label for="email" class="sponsor-label">EMAIL</label>
+                <input id="email" class="sponsor-input" type="email" required placeholder="you@example.com" />
+
+                <label for="number" class="sponsor-label">PHONE NUMBER</label>
+                <input id="number" class="sponsor-input" type="tel" required placeholder="+592..." />
+            </div>
+
+            <!-- Company Information -->
+            <div class="mx-auto my-4 w-[90%] max-w-[500px] rounded-[10px] border-[3px] border-white/15 bg-white/5 p-3">
+                <label for="cName" class="sponsor-label">COMPANY NAME</label>
+                <input id="cName" class="sponsor-input" type="text" required placeholder="Example Corp." />
+                <label for="about" class="sponsor-label">TELL US MORE</label>
+                <textarea id="about" class="sponsor-input h-28 resize-none" required
+                    placeholder="Tell us about your business..."></textarea>
+            </div>
+
+            <div class="w-full">
+                <button class="sponsor-submit" id="sponsor-submit">SUBMIT</button>
+            </div>
+
+            <!-- Success Message -->
+            <div id="message" class="mx-auto hidden w-fit">
+                <h1
+                    class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-green-500 bg-green-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+                    MESSAGE SENT ✓</h1>
+            </div>
+
+            <!-- Failed Message -->
+            <div id="error-message" class="mx-auto hidden w-fit">
+                <h1
+                    class="fixed top-4 right-0 left-0 mx-auto mt-[90px] w-fit rounded-[8px] border-2 border-red-500 bg-red-500 px-8 py-5 text-center font-sans text-[16px] font-medium tracking-[5px] text-white shadow-2xs">
+                    ERROR: Ensure ALL Fields are filled correctly.</h1>
+            </div>
+        </form>
     </section>
 
     <!-- Footer -->
