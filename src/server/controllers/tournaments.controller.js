@@ -17,7 +17,7 @@ const isValidUrl = (value) => {
 
 const isISODate = (s) => /^\d{4}-\d{2}-\d{2}$/.test(String(s ?? ""));
 
-const allowedPlatforms = new Set(["Mobile", "PC", "Xbox", "PS5"]);
+const allowedPlatforms = new Set(["Mobile", "PC", "Xbox", "PS5", "Other", "IRL"]);
 const allowedCategories = new Set(["FPS", "Sports", "Fighting", "Other"]);
 
 const normalizePlatforms = (p) => {

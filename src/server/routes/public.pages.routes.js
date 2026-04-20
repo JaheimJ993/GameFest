@@ -11,7 +11,7 @@ router.get("/about", (req, res)=>{
     res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "about.html"))
 })
 
-router.get("/Sponsor", (req, res) =>{
+router.get("/Vendor", (req, res) =>{
     res.sendFile(path.join(__dirname, "..", "..", "..", "src", "client", "views", "public", "sponsor.html"))
 })
 

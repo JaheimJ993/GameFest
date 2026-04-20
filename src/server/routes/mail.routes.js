@@ -5,7 +5,7 @@ const {contact, sponsor, cosplaySignup} = require("../controllers/mail.controlle
 
 
 router.post("/contactSubmit", contact)
-router.post("/Sponsor/submitData", sponsor)
+router.post("/Vendor/submitData", sponsor)
 router.post("/api/cosplayData", cosplaySignup)
 
 

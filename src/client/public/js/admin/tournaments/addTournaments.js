@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalize = (v) => String(v ?? "").trim().replace(/\s+/g, " ");
   const todayISO = () => new Date().toISOString().slice(0, 10);
 
-  const allowedPlatforms = new Set(["Mobile", "PC", "Xbox", "PS5"]);
+  const allowedPlatforms = new Set(["Mobile", "PC", "Xbox", "PS5", "Other", "IRL"]);
 
   function getGameCategory() {
     const selectedRadio = document.querySelector('input[name="gameCategory"]:checked');
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (payload.players < 1 || payload.players > 4) errors.push("Number of players must be between 1 and 4.");
 
     if (!Array.isArray(payload.platforms) || payload.platforms.length === 0) {
-      errors.push("Select at least one platform (Mobile, PC, Xbox, PS5).");
+      errors.push("Select at least one platform (Mobile, PC, Xbox, PS5, Other, IRL).");
     }
 
     if (!Number.isFinite(payload.regFee)) errors.push("Registration fee (reg_fee) is required.");
